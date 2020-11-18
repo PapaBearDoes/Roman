@@ -1,0 +1,26 @@
+<!--
+                                 \\\\///
+                                /       \
+                              (| (.)(.) |)
+.===========================.OOOo==()==oOOO.===========================.
+|                                                                      |
+|  PapaBearDoes' Roman Addon for World of Warcraft              |
+######################################################################## -->
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+  <Script file="globals.lua"/>
+  <Script file="config.lua"/>
+  <Script file="events.lua"/>
+  <Script file="functions.lua"/>
+  <Script file="dialog.lua"/>
+  <Script file="databroker.lua"/>
+</Ui>
+<!--
+########################################################################
+|  Last Editted By: @file-author@ - @file-date-iso@
+|  @file-revision@
+'=======================.oooO==========================================|
+                       (    )     Oooo.
+                        \  (     (    )
+                         \__)     )  /
+                                 (__/                                    -->
