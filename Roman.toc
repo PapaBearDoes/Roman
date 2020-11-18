@@ -1,4 +1,4 @@
-Roman## Interface: 90002
+## Interface: 90002
 
 #Meta
 ## Title: Roman
@@ -11,18 +11,18 @@ Roman## Interface: 90002
 ## Version: 1.0.0-alpha
 #@end-do-not-package@
 ## Notes: Message Barker, inspired by my loud German Shepherd mix, Roman.
-## Notes-deDE:
+## Notes-deDE: Message Barker, inspiriert von meinem lauten Schäferhund-Mix Roman.
 ## Notes-enUS: Message Barker, inspired by my loud German Shepherd mix, Roman.
-## Notes-esES:
-## Notes-esMX:
-## Notes-frFR:
-## Notes-itIT:
-## Notes-koKR:
-## Notes-ptBR:
-## Notes-ruRU:
-## Notes-zhCN:
-## Notes-zhTW:
-## OptionalDeps: LibInit, LibDialog-1.0, LibDBIcon-3.0
+## Notes-esES: Mensaje Barker, inspirado en mi ruidosa mezcla de pastor alemán, Roman.
+## Notes-esMX: Mensaje Barker, inspirado en mi ruidosa mezcla de pastor alemán, Roman.
+## Notes-frFR: Message Barker, inspiré par mon mélange fort de berger allemand, Roman.
+## Notes-itIT: Messaggio Barker, ispirato dal mio rumoroso mix di pastori tedeschi, Roman.
+## Notes-koKR: 내 시끄러운 독일 셰퍼드 믹스, Roman에서 영감을 얻은 Message Barker.
+## Notes-ptBR: Message Barker, inspirado por meu mix alto de pastor alemão, Roman.
+## Notes-ruRU: Сообщение Баркера, вдохновленное моей громкой смесью немецких овчарок, Роман.
+## Notes-zhCN: Message Barker，灵感来自我大声的德国牧羊犬组合 Roman。
+## Notes-zhTW: 消息巴克，靈感來自我大聲的德國牧羊犬組合 Roman。
+## OptionalDeps: LibInit, LibDialog-1.0, LibDBIcon-3.0, LibMayronObjects, LibMayronDB, LibMayronEvents
 
 #X-Meta
 ## X-Category:
@@ -37,6 +37,9 @@ Roman## Interface: 90002
 Libraries\LibInit\LibInit.xml
 Libraries\LibDialog-1.0\lib.xml
 Libraries\LibDBIcon-1.0\LibDBIcon-1.0\lib.xml
+Libraries\LibMayronObjects\LibMayronObjects.xml
+Libraries\LibMayronDB\LibMayronDB.lua
+Libraries\LibMayronEvents\LibMayronEvents.lua
 
 #Load Languages
 Locales\locales.xml
