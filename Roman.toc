@@ -25,10 +25,10 @@
 ## OptionalDeps: LibInit, LibDialog-1.0, LibDBIcon-3.0, LibMayronObjects, LibMayronDB, LibMayronEvents
 
 #X-Meta
-## X-Category:
-## X-License: GPLv3
-## X-Website:
-## X-Curse-Project-ID:
+### X-Category:
+### X-License: GPLv3
+### X-Website:
+### X-Curse-Project-ID:
 
 #Functionality
 ## SavedVariables: RomanSV
@@ -48,7 +48,7 @@ Locales\locales.xml
 Roman.lua
 
 #Load modules
-Modules\modules.xml
+#Modules\modules.xml
 
 #Last Editted By: @file-author@ - @file-date-iso@
 #@file-revision@

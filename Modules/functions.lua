@@ -12,9 +12,12 @@ local _G = _G
 --Durrr = select(2, ...)
 local me, ns = ...
 local Roman = ns
-local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 local Roman_Functions = Roman:NewModule("Functions", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 local L = Roman:GetLocale()
+local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
+if not RomanDB then
+  Roman:print(L["ErrorDB"])
+end
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
