@@ -16,21 +16,21 @@ local L = Roman:GetLocale()
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 function Roman:OnInitialize()
-  Roman.db = LibStub("AceDB-3.0"):New("RomanDB", Roman.dbDefaults, "Default")
-  if not Roman.db then
+  RomanDB = LibStub("LibMayronDB"):New(me, "RomanSV", false, "RomanDB")
+  if not RomanDB then
     local errorDB = L["ErrorDB"]
     print(errorDB)
   end
-  Roman.db.RegisterCallback(self, "OnProfileChanged", "UpdateProfile")
-  Roman.db.RegisterCallback(self, "OnProfileCopied", "UpdateProfile")
-  Roman.db.RegisterCallback(self, "OnProfileReset", "UpdateProfile")
+  RomanDB.RegisterCallback(self, "OnProfileChanged", "UpdateProfile")
+  RomanDB.RegisterCallback(self, "OnProfileCopied", "UpdateProfile")
+  RomanDB.RegisterCallback(self, "OnProfileReset", "UpdateProfile")
 
-  Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(Roman.db)
+  Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(RomanDB)
   LibStub("AceConfig-3.0"):RegisterOptionsTable(me, Roman.options, nil)
 
   -- Enable/disable modules based on saved settings
 	for name, module in Roman:IterateModules() do
-		module:SetEnabledState(Roman.db.profile.moduleEnabledState[name] or false)
+		module:SetEnabledState(RomanDB.profile.moduleEnabledState[name] or false)
     if module.OnEnable then
       hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
     end
@@ -43,6 +43,10 @@ function Roman:OnInitialize()
   Roman:ScheduleUpdate()
 end
 
+RomanDB:OnStartUp(function(self)
+  -- your code here!
+  -- self is a reference to the database.
+end);
 function Roman:OnModuleEnable_Common()
 end
 
@@ -80,7 +84,7 @@ function Roman:UpdateProfile()
 end
 
 function Roman:OnProfileChanged(event, database, newProfileKey)
-  Roman.db.profile = database.profile
+  RomanDB.profile = database.profile
 end
 
 function Roman:UpdateProfileDelayed()

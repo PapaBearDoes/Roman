@@ -21,7 +21,7 @@ Roman.globals = {
 }
 
 -- Create DB defaults
-Roman.dbDefaults = {
+RomanDB.defaults = {
   profile = {
     moduleEnabledState = {
       ["*"] = true
