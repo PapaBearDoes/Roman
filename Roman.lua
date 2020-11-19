@@ -12,48 +12,44 @@ local _G = _G
 local me, ns = ...
 local Roman = LibStub("LibInit"):NewAddon(ns, me, true, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 local L = Roman:GetLocale()
-local RomanDB = LibStub("LibMayronDB"):CreateDatabase(me, "RomanSV", false, "RomanDB")
-if not RomanDB then
-  Roman:print(L["ErrorDB"])
-end
+local myDB = LibStub("LibMayronDB"):CreateDatabase(me, "RomanSV", false, "RomanDB")
+romanDefaults = {}
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-RomanDB:OnStartUp(function(self)
+myDB:OnStartUp(function(self)
   -- self is a reference to the database.
-  self:AddToDefaults("profile.Default", {
-    moduleEnabledState = {
-      ["*"] = true
-    },
-  })
-end);
+  RomanDB = self
+  self:AddToDefaults("global.configs", romanDefaults.configs)
+  self:AddToDefaults("profile.globals", romanDefaults.globals)
+  self:AddToDefaults("profile.modules", romanDefaults.modules)
+  self.global:Print(10)
+  self.profile:Print(10)
+end)
 
 --RomanDB:OnProfileChange(function(self, newProfileName, oldProfileName)
   --self:TriggerUpdateFunction("profile.myModule.width");
 --end)
 
-RomanDB:PrintDefaults(2)
 
 
 
 function Roman:OnInitialize()
---  RomanDB:AddToDefaults("global", RomanDB.defaults)
-
---[[  LibStub("AceConfig-3.0"):RegisterOptionsTable(me, Roman.options, nil)
+--  LibStub("AceConfig-3.0"):RegisterOptionsTable(me, RomanDB.global.configs, nil)
 
   -- Enable/disable modules based on saved settings
-	for name, module in Roman:IterateModules() do
-		module:SetEnabledState(RomanDB.profile.moduleEnabledState[name] or false)
-    if module.OnEnable then
-      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
-    end
-  end
+--	for name, module in Roman:IterateModules() do
+--		module:SetEnabledState(RomanDB.profile.moduleEnabledState[name] or false)
+--    if module.OnEnable then
+--      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
+--    end
+--  end
 
-  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
-  Roman:CreateDialogs()
-  Roman:MiniMapIcon()
-  Roman:UpdateIcon()
-  Roman:ScheduleUpdate() ]]--
+--  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
+--  Roman:CreateDialogs()
+--  Roman:MiniMapIcon()
+--  Roman:UpdateIcon()
+--  Roman:ScheduleUpdate() ]]--
 end
 
 --[[function Roman:OnModuleEnable_Common()

@@ -48,7 +48,7 @@ Locales\locales.xml
 Roman.lua
 
 #Load modules
-#Modules\modules.xml
+Modules\modules.xml
 
 #Last Editted By: @file-author@ - @file-date-iso@
 #@file-revision@

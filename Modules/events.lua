@@ -13,10 +13,7 @@ local _G = _G
 local me, ns = ...
 local Roman = ns
 local L = Roman:GetLocale()
-local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
-if not RomanDB then
-  Roman:print(L["ErrorDB"])
-end
+local myDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
