@@ -12,11 +12,12 @@ local _G = _G
 --Durrr = select(2, ...)
 local me, ns = ...
 local Roman = ns
+local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-Roman.globals = {
+RomanDB.globals = {
   enableTasks = {},
 }
 

@@ -12,13 +12,14 @@ local _G = _G
 --Durrr = select(2, ...)
 local me, ns = ...
 local Roman = ns
+local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 -- Do LDB stuff --
-LDB = LibStub("LibDataBroker-1.1")
-RomanLDB = LDB:NewDataObject("RomanLDB", {
+RomanLDB = LibStub("LibDataBroker-1.1")
+RLDB = RomanLDB:NewDataObject("RomanLDB", {
   type = "data source",
   label = "",
   text = "",
