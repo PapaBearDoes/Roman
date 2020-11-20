@@ -17,20 +17,30 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-romanDefaults.options = {
+romanConfig = {
   type = "group",
-  name = "Roman",
+  name = me,
   args = {
     general = {
       order = 1,
       type = "group",
       name = L["GeneralSettings"],
-      cmdInline = true,
       args = {
         separator1 = {
           type = "header",
-          name = "",
+          name = "This is a Header",
           order = 1,
+        },
+        testOption = {
+          order = 2,
+          type = "toggle",
+          name = "TestToggle",
+          get = function()
+            return RomanDB.profile.options.general.testOption
+          end,
+          set = function(key, value)
+            RomanDB.profile.options.general.testOption = value
+          end,
         },
       },
     },

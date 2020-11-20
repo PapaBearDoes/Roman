@@ -10,7 +10,14 @@
 -- Imports
 local _G = _G
 local me, ns = ...
-local Roman = LibStub("LibInit"):NewAddon(ns, me, true, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
+local romanInitOptions = {
+	profile = "Default",
+	noswitch = false,
+	nogui = true,
+	nohelp = true,
+	enhancedProfile = false,
+}
+local Roman = LibStub("LibInit"):NewAddon(ns, me, romanInitOptions, true)
 local L = Roman:GetLocale()
 local RomanDB = LibStub("LibMayronDB"):CreateDatabase(me, "RomanSV", false, "RomanDB")
 romanDefaults = {}
@@ -26,7 +33,6 @@ function Roman:doStartup()
     end
   end
 
-
 --  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
 --  Roman:CreateDialogs()
 --  Roman:MiniMapIcon()
@@ -35,10 +41,10 @@ function Roman:doStartup()
 end
 
 function Roman:doConfig()
-	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, RomanDB.global.options)
-	local Roman_Config = LibStub("AceConfigDialog-3.0")
-  Roman_OptionFrames = {}
-  Roman_OptionFrames.general = Roman_Config:AddToBlizOptions(me, nil, nil, "general")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
+	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
+  RomanOptionFrames = {}
+	RomanOptionFrames.general = romanConfigDialog:AddToBlizOptions(me, nil, nil, "general")
 end
 
 function Roman:OnModuleEnable_Common()
@@ -51,29 +57,12 @@ end
   end
 end ]]--
 
---[[function Roman:OnEnable()
-  local Roman_Dialog = LibStub("AceConfigDialog-3.0")
-  Roman_OptionFrames = {}
-  Roman_OptionFrames.general = Roman_Dialog:AddToBlizOptions("Roman", nil, nil, "general")
-  Roman_OptionFrames.profile = Roman_Dialog:AddToBlizOptions("Roman", L["Profiles"], "Roman", "profile")
-  Roman:ScheduleRepeatingTimer("MainUpdate", 1)
-end]]--
+function Roman:ShowConfig()
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.general)
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.general)
+end
 
 --[[
-function Roman:OnDisable()
-end
-
--- Config window --
-function Roman:ShowConfig()
-	InterfaceOptionsFrame_OpenToCategory(Roman_OptionFrames.profile)
-	InterfaceOptionsFrame_OpenToCategory(Roman_OptionFrames.general)
-end
--- End Options --
-
-function Roman:UpdateOptions()
-  LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-end
-
 function Roman:UpdateProfile()
   Roman:ScheduleTimer("UpdateProfileDelayed", 0)
 end
@@ -101,18 +90,33 @@ end
 
 function Roman:OnProfileReset()
 end ]]--
-RomanDB:OnStartUp(function(self)
-  -- self is a reference to the database.
-  self:AddToDefaults("global.options", romanDefaults.options)
-  self:AddToDefaults("profile.globals", romanDefaults.globals)
-  self:AddToDefaults("profile.modules", romanDefaults.modules)
 
-  Roman:doStartup()
-  Roman:doConfig()
+function Roman:OnInitialize()
+	RomanDB:OnStartUp(function(self)
+		RomanDB:AddToDefaults("global.addon", romanDefaults.globals)
+		RomanDB:AddToDefaults("profile.options", romanDefaults.options)
 
-  self.global:Print(10)
-  self.profile:Print(10)
-end)
+		RomanDB:RegisterUpdateFunctions("profile.options.general", {
+			testOption = function(value)
+				LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+				Roman:Print("testOption Updated to: ")
+				Roman:Print(RomanDB.profile.options.general.testOption)
+			end
+		})
+
+		RomanDB.global:Print(10)
+		RomanDB.profile:Print(10)
+
+		Roman:doStartup()
+	end)
+end
+
+function Roman:OnEnable()
+	Roman:doConfig()
+end
+
+function Roman:OnDisable()
+end
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

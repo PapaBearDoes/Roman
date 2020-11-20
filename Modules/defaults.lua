@@ -18,9 +18,14 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 -- Create DB defaults
-romanDefaults.modules = {
-  enabledState = {
-    ["*"] = true
+romanDefaults.options = {
+  general = {
+    testOption = true,
+  },
+  modules = {
+    enabledState = {
+      ["*"] = true
+    },
   },
 }
 
