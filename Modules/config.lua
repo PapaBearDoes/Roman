@@ -17,7 +17,7 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-romanDefaults.configs = {
+romanDefaults.options = {
   type = "group",
   name = "Roman",
   args = {
