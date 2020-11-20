@@ -25,7 +25,7 @@ function Roman:doStartup()
       hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
     end
   end
-  RomanDB.profile.modules:Print(10)
+
 
 --  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
 --  Roman:CreateDialogs()
@@ -35,6 +35,10 @@ function Roman:doStartup()
 end
 
 function Roman:doConfig()
+	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, RomanDB.global.options)
+	local Roman_Config = LibStub("AceConfigDialog-3.0")
+  Roman_OptionFrames = {}
+  Roman_OptionFrames.general = Roman_Config:AddToBlizOptions(me, nil, nil, "general")
 end
 
 function Roman:OnModuleEnable_Common()
@@ -99,13 +103,12 @@ function Roman:OnProfileReset()
 end ]]--
 RomanDB:OnStartUp(function(self)
   -- self is a reference to the database.
-  self:AddToDefaults("global.configs", romanDefaults.configs)
+  self:AddToDefaults("global.options", romanDefaults.options)
   self:AddToDefaults("profile.globals", romanDefaults.globals)
   self:AddToDefaults("profile.modules", romanDefaults.modules)
 
   Roman:doStartup()
   Roman:doConfig()
-
 
   self.global:Print(10)
   self.profile:Print(10)
