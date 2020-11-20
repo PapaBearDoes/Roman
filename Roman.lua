@@ -12,38 +12,20 @@ local _G = _G
 local me, ns = ...
 local Roman = LibStub("LibInit"):NewAddon(ns, me, true, "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 local L = Roman:GetLocale()
-local myDB = LibStub("LibMayronDB"):CreateDatabase(me, "RomanSV", false, "RomanDB")
+local RomanDB = LibStub("LibMayronDB"):CreateDatabase(me, "RomanSV", false, "RomanDB")
 romanDefaults = {}
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-myDB:OnStartUp(function(self)
-  -- self is a reference to the database.
-  RomanDB = self
-  self:AddToDefaults("global.configs", romanDefaults.configs)
-  self:AddToDefaults("profile.globals", romanDefaults.globals)
-  self:AddToDefaults("profile.modules", romanDefaults.modules)
-  self.global:Print(10)
-  self.profile:Print(10)
-end)
-
---RomanDB:OnProfileChange(function(self, newProfileName, oldProfileName)
-  --self:TriggerUpdateFunction("profile.myModule.width");
---end)
-
-
-
-
-function Roman:OnInitialize()
---  LibStub("AceConfig-3.0"):RegisterOptionsTable(me, RomanDB.global.configs, nil)
-
+function Roman:doStartup()
   -- Enable/disable modules based on saved settings
---	for name, module in Roman:IterateModules() do
---		module:SetEnabledState(RomanDB.profile.moduleEnabledState[name] or false)
---    if module.OnEnable then
---      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
---    end
---  end
+	for name, module in Roman:IterateModules() do
+		module:SetEnabledState(RomanDB.profile.modules.enabledState[name] or false)
+    if module.OnEnable then
+      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
+    end
+  end
+  RomanDB.profile.modules:Print(10)
 
 --  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
 --  Roman:CreateDialogs()
@@ -52,23 +34,26 @@ function Roman:OnInitialize()
 --  Roman:ScheduleUpdate() ]]--
 end
 
---[[function Roman:OnModuleEnable_Common()
+function Roman:doConfig()
 end
 
-function Roman:MiniMapIcon()
+function Roman:OnModuleEnable_Common()
+end
+
+--[[function Roman:MiniMapIcon()
   if icon == nil or not icon then
     icon = LDB and LibStub("LibDBIcon-1.0")
     icon:Register("Roman_MapIcon", RomanLDB)
   end
 end ]]--
 
-function Roman:OnEnable()
-  --[[local Roman_Dialog = LibStub("AceConfigDialog-3.0")
+--[[function Roman:OnEnable()
+  local Roman_Dialog = LibStub("AceConfigDialog-3.0")
   Roman_OptionFrames = {}
   Roman_OptionFrames.general = Roman_Dialog:AddToBlizOptions("Roman", nil, nil, "general")
   Roman_OptionFrames.profile = Roman_Dialog:AddToBlizOptions("Roman", L["Profiles"], "Roman", "profile")
-  Roman:ScheduleRepeatingTimer("MainUpdate", 1) ]]--
-end
+  Roman:ScheduleRepeatingTimer("MainUpdate", 1)
+end]]--
 
 --[[
 function Roman:OnDisable()
@@ -112,6 +97,19 @@ end
 
 function Roman:OnProfileReset()
 end ]]--
+RomanDB:OnStartUp(function(self)
+  -- self is a reference to the database.
+  self:AddToDefaults("global.configs", romanDefaults.configs)
+  self:AddToDefaults("profile.globals", romanDefaults.globals)
+  self:AddToDefaults("profile.modules", romanDefaults.modules)
+
+  Roman:doStartup()
+  Roman:doConfig()
+
+
+  self.global:Print(10)
+  self.profile:Print(10)
+end)
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

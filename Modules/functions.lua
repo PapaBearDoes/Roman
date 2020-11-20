@@ -12,13 +12,13 @@ local _G = _G
 --Durrr = select(2, ...)
 local me, ns = ...
 local Roman = ns
-local Roman_Functions = Roman:NewModule("Functions", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
+local RomanFunctions = Roman:NewModule("Functions", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceHook-3.0")
 local L = Roman:GetLocale()
-local myDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
+local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-
+RomanFunctions:Print("Functions Module Fired!")
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

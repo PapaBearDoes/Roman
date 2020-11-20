@@ -13,7 +13,7 @@ local _G = _G
 local me, ns = ...
 local Roman = ns
 local L = Roman:GetLocale()
-local myDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
+local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
