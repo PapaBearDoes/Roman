@@ -33,7 +33,6 @@ function Roman:doStartup()
 end
 
 function Roman:doConfig()
-	Roman:ConfigCategoryList()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
 	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}

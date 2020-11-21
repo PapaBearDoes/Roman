@@ -76,15 +76,39 @@ phrases = {
       name = L["Categories"],
       type="group",
       args = {
-        categories2 = {
+        catListHeader = {
           order = 0,
-          inline = true,
-          name = L["Categories"],
-          type="group",
-          args = {},
+          name = L["CategoriesList"],
+          type = "header",
+          width = "full",
+        },
+        catListDesc = {
+          order = 1,
+          name = "Checking a category will delete it from the database", --L["CatListDesc"]
+          type = "description",
+          width = "full",
+        },
+        categoriesList = {
+          order = 2,
+          name = "",
+          type = "multiselect",
+          width = "full",
+          confirm = true,
+          confirmText =[=[Are you sure you wish to delete this category?
+|CFFFF0000This is not recoverable!|r]=],
+          values = function()
+            local list = {}
+            for key, value in RomanDB.profile.options.phrases.categories:Iterate() do
+              list[key] = value
+            end
+            return list
+          end,
+          set = function(v, key)
+            RomanDB.profile.options.phrases.categories[key] = nil
+          end,
         },
         addCategory = {
-          order = 1,
+          order = 3,
           inline = true,
           name = L["AddCategories"],
           type="group",
@@ -99,7 +123,65 @@ phrases = {
                 local n = RomanDB.profile.options.phrases.categories:GetLength()
                 n = n + 1
                 RomanDB.profile.options.phrases.categories[n] = value
-                RomanDB.profile.options.phrases.categories:Print(3)
+              end,
+            },
+          },
+        },
+      },
+    },
+    barks = {
+      order = 1,
+      --inline = true,
+      name = L["Barks"],
+      type="group",
+      args = {
+        barksListHeader = {
+          order = 0,
+          name = L["BarksList"],
+          type = "header",
+          width = "full",
+        },
+        barksListDesc = {
+          order = 1,
+          name = "Checking a Bark will delete it from the database", --L["CatListDesc"]
+          type = "description",
+          width = "full",
+        },
+        barksList = {
+          order = 2,
+          name = "",
+          type = "multiselect",
+          width = "full",
+          confirm = true,
+          confirmText =[=[Are you sure you wish to delete this Bark?
+|CFFFF0000This is not recoverable!|r]=],
+          values = function()
+            local list = {}
+            for key, value in RomanDB.profile.options.phrases.barks:Iterate() do
+              list[key] = value
+            end
+            return list
+          end,
+          set = function(v, key)
+            RomanDB.profile.options.phrases.barks[key] = nil
+          end,
+        },
+        addBark = {
+          order = 3,
+          inline = true,
+          name = L["AddBarks"],
+          type="group",
+          args = {
+            addBark = {
+              order = 0,
+              name = L["AddBark"],
+              desc = L["AddBarkDesc"],
+              type = "input",
+              width = "full",
+              set = function(key, value)
+                local n = RomanDB.profile.options.phrases.barks:GetLength()
+                n = n + 1
+                RomanDB.profile.options.phrases.barks[n] = value
               end,
             },
           },
@@ -112,50 +194,6 @@ phrases = {
     },
   },
 }
-
-function Roman:ConfigCategoryList()
-  local n = 0
-  for key, value in RomanDB.profile.options.phrases.categories:Iterate() do
-    Roman:Print(key)
-    Roman:Print(value)
-    RomanDB.profile.options.phrases.categories:Print(3)
-    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key)
-    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key.."Del")
-    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key.."Spacer")
-
-    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key] = {
-      ["order"] = n,
-      ["type"] = "description",
-      ["fontSize"] = "medium",
-      ["name"] = value,
-      ["width"] = "full",
-    }
-
-    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key.."Del"] = {
-      ["order"] = n + 1,
-      ["type"] = "execute",
-      ["name"] = "Delete: " .. value,
-      ["width"] = "half",
-      ["func"] = function()
-        for key2, value2 in RomanDB.profile.options.phrases.categories:Iterate() do
-          if key2 == key then
-            Roman:Print("RomanDB.profile.options.phrases.categories."..key)
-            RomanDB.profile.options.phrases.categories[key] = nil
-            RomanDB.profile.options.phrases.categories:Print(3)
-          end
-        end
-      end,
-    }
-
-    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key.."Spacer"] = {
-      ["order"] = n + 2,
-      ["type"] = "header",
-      ["name"] = "",
-      ["width"] = "full",
-    }
-    n = n + 10
-  end
-end
 
 --[[combat = {
   name= L["In Combat"],

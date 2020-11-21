@@ -27,6 +27,7 @@ romanDefaults.options = {
   },
   phrases = {
     categories = {},
+    barks = {},
   },
 }
 
