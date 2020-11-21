@@ -20,13 +20,12 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 -- Create DB defaults
 romanDefaults.options = {
   general = {
-    testOption = true,
-  },
-  modules = {
-    enabledState = {
-      ["*"] = true
+    mmIcon = {
+      minimapPos = 245,
+      hide = false,
     },
   },
+  phrases = {},
 }
 
 -- Globals Table

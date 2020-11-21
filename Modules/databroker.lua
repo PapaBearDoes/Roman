@@ -21,9 +21,9 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 RomanLDB = LibStub("LibDataBroker-1.1")
 RLDB = RomanLDB:NewDataObject("RomanLDB", {
   type = "data source",
-  label = "",
-  text = "",
-  icon = "",
+  label = "Roman",
+  text = "Chat Barker",
+  icon = "Interface\\Icons\\inv_stbernarddogpet",
   OnClick = function(frame, click)
     if click == "RightButton" then
       Roman:ShowConfig()
@@ -36,6 +36,7 @@ RLDB = RomanLDB:NewDataObject("RomanLDB", {
     tooltip:AddLine(" ")
 
     tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightToolTip"])
+    tooltip:AddLine(Roman:Colorize(L["LeftClick"] .. " ", "eda55f") .. L["LeftToolTip"])
   end,
 })
 

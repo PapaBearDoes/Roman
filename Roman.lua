@@ -25,84 +25,39 @@ romanDefaults = {}
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 function Roman:doStartup()
-  -- Enable/disable modules based on saved settings
-	for name, module in Roman:IterateModules() do
-		module:SetEnabledState(RomanDB.profile.modules.enabledState[name] or false)
-    if module.OnEnable then
-      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
-    end
-  end
-
 --  Roman:RegisterEvent("PLAYER_DEAD", "ScheduleUpdate")
 --  Roman:CreateDialogs()
---  Roman:MiniMapIcon()
+  Roman:MiniMapIcon()
 --  Roman:UpdateIcon()
---  Roman:ScheduleUpdate() ]]--
+--  Roman:ScheduleUpdate()
 end
 
 function Roman:doConfig()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
 	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
-	RomanOptionFrames.general = romanConfigDialog:AddToBlizOptions(me, nil, nil, "general")
+	RomanOptionFrames.barks = romanConfigDialog:AddToBlizOptions(me, me, nil, "barkSettings")
 end
-
-function Roman:OnModuleEnable_Common()
-end
-
---[[function Roman:MiniMapIcon()
-  if icon == nil or not icon then
-    icon = LDB and LibStub("LibDBIcon-1.0")
-    icon:Register("Roman_MapIcon", RomanLDB)
-  end
-end ]]--
 
 function Roman:ShowConfig()
-	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.general)
-	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.general)
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.barks)
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.barks)
 end
 
---[[
-function Roman:UpdateProfile()
-  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
-end
-
-function Roman:OnProfileChanged(event, database, newProfileKey)
-  RomanDB.profile = database.profile
-end
-
-function Roman:UpdateProfileDelayed()
-  for timerKey, timerValue in Roman:IterateModules() do
-    if timerValue.db.profile.on then
-      if timerValue:IsEnabled() then
-        timerValue:Disable()
-        timerValue:Enable()
-      else
-        timerValue:Enable()
-      end
-    else
-      timerValue:Disable()
-    end
+function Roman:MiniMapIcon()
+  if RomanIcon == nil or not RomanIcon then
+		RomanIcon = LibStub("LibDBIcon-1.0")
+    RomanIcon:Register("RomanMapIcon", RLDB, RomanDB.profile.options.general.mmIcon)
   end
-
-  Roman:UpdateOptions()
 end
-
-function Roman:OnProfileReset()
-end ]]--
 
 function Roman:OnInitialize()
 	RomanDB:OnStartUp(function(self)
 		RomanDB:AddToDefaults("global.addon", romanDefaults.globals)
 		RomanDB:AddToDefaults("profile.options", romanDefaults.options)
 
-		RomanDB:RegisterUpdateFunctions("profile.options.general", {
-			testOption = function(value)
-				LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-				Roman:Print("testOption Updated to: ")
-				Roman:Print(RomanDB.profile.options.general.testOption)
-			end
-		})
+		--Register For Updates to Config Changes
+		--RomanDB:RegisterUpdateFunctions("profile.options.general", {})
 
 		RomanDB.global:Print(10)
 		RomanDB.profile:Print(10)
