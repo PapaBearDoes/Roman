@@ -18,96 +18,145 @@ local RomanDB = LibStub("LibMayronDB"):GetDatabaseByName("RomanDB")
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 romanConfig = {
+  order = 0,
   type = "group",
   name = me,
   args = {
-    barkSettings = {
-      name = L["BarksSettings"],
+    settings = {
+      name = L["Settings"],
       order = 0,
       type = "group",
       args = {
-        generalSettings = {
-  				name = L["GeneralSettings"],
-  				type = "group",
-  				order = 0,
-  				args = {
-  					general = {
-  						inline = true,
-  						name = L["GeneralSettings"],
-  						type = "group",
-  						order = 3,
-  						args = {
-                showMiniMapIcon = {
-                  order = 3,
-                  type = "toggle",
-                  name = L["ShowMiniMapIcon"],
-                  desc = L["ShowMiniMapIconDesc"],
-                  get = function()
-                    if RomanDB.profile.options.general.mmIcon.hide == true then
-                      show = false
-                    else
-                      show = true
-                    end
-                    return show
-                  end,
-                  set = function(key, value)
-                    if value == true then
-                      RomanDB.profile.options.general.mmIcon.hide = false
-                      RomanIcon:Show("RomanMapIcon")
-                    else
-                      RomanDB.profile.options.general.mmIcon.hide = true
-                      RomanIcon:Hide("RomanMapIcon")
-                    end
-                  end,
-                },
-  						},
-  					},
-  					--[[defaults = {
-  						inline = true,
-  						name= L["Defaults"],
-  						type="group",
-  						order = 4,
-  						args={
-  							label = {
-  								order = 0,
-  								type = "description",
-  								name = L["Automatically disable new plugins of type:"],
-  							},
-  						},
-  					},]]--
+generalSettings = {
+  name = L["GeneralSettings"],
+  type = "group",
+  order = 0,
+  args = {
+    general = {
+      order = 0,
+      inline = true,
+      name = L["GeneralSettings"],
+      type = "group",
+      args = {
+        showMiniMapIcon = {
+          order = 0,
+          type = "toggle",
+          name = L["ShowMiniMapIcon"],
+          desc = L["ShowMiniMapIconDesc"],
+          get = function()
+            if RomanDB.profile.options.general.mmIcon.hide == true then
+              show = false
+            else
+              show = true
+            end
+            return show
+          end,
+          set = function(key, value)
+            if value == true then
+              RomanDB.profile.options.general.mmIcon.hide = false
+              RomanIcon:Show("RomanMapIcon")
+            else
+              RomanDB.profile.options.general.mmIcon.hide = true
+              RomanIcon:Hide("RomanMapIcon")
+            end
+          end,
+        },
+      },
+    },
+  },
+},
+phrases = {
+  name = L["Barks"],
+  type = "group",
+  order = 1,
+  args = {
+    categories = {
+      order = 0,
+      --inline = true,
+      name = L["Categories"],
+      type="group",
+      args = {
+        categories2 = {
+          order = 0,
+          inline = true,
+          name = L["Categories"],
+          type="group",
+          args = {},
+        },
+        addCategory = {
+          order = 1,
+          inline = true,
+          name = L["AddCategories"],
+          type="group",
+          args = {
+            add = {
+              order = 0,
+              name = L["AddCategory"],
+              desc = L["AddCategoryDesc"],
+              type = "input",
+              width = "full",
+              set = function(key, value)
+                local n = RomanDB.profile.options.phrases.categories:GetLength()
+                n = n + 1
+                RomanDB.profile.options.phrases.categories[n] = value
+                RomanDB.profile.options.phrases.categories:Print(3)
+              end,
+            },
           },
         },
-        phrases = {
-  				name = L["Barks"],
-  				type = "group",
-  				order = 1,
-  				args = {
-  					categories = {
-  						inline = true,
-  						name = L["Categories"],
-  						type="group",
-  						order = 3,
-  						args = {
-  							--[[locked = {
-  								type = 'toggle',
-  								order = 1,
-  								name = L["Lock Plugins"],
-  								desc = L["Hold alt key to drag a plugin."],
-  								get = function(info, value)
-  										return
-  								end,
-  								set = function(info, value)
-  										--db.locked = value
-  								end,
-  							},]]--
-  						},
-  					},
-  				},
-  			},
+      },
+    },
+  },
+},
       },
     },
   },
 }
+
+function Roman:ConfigCategoryList()
+  local n = 0
+  for key, value in RomanDB.profile.options.phrases.categories:Iterate() do
+    Roman:Print(key)
+    Roman:Print(value)
+    RomanDB.profile.options.phrases.categories:Print(3)
+    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key)
+    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key.."Del")
+    Roman:Print("romanConfig.args.settings.args.phrases.args.categories.args.categories2.args.Cat"..key.."Spacer")
+
+    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key] = {
+      ["order"] = n,
+      ["type"] = "description",
+      ["fontSize"] = "medium",
+      ["name"] = value,
+      ["width"] = "full",
+    }
+
+    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key.."Del"] = {
+      ["order"] = n + 1,
+      ["type"] = "execute",
+      ["name"] = "Delete: " .. value,
+      ["width"] = "half",
+      ["func"] = function()
+        for key2, value2 in RomanDB.profile.options.phrases.categories:Iterate() do
+          if key2 == key then
+            Roman:Print("RomanDB.profile.options.phrases.categories."..key)
+            RomanDB.profile.options.phrases.categories[key] = nil
+            RomanDB.profile.options.phrases.categories:Print(3)
+          end
+        end
+      end,
+    }
+
+    romanConfig.args.settings.args.phrases.args.categories.args.categories2.args["Cat"..key.."Spacer"] = {
+      ["order"] = n + 2,
+      ["type"] = "header",
+      ["name"] = "",
+      ["width"] = "full",
+    }
+    n = n + 10
+  end
+end
+
 --[[combat = {
   name= L["In Combat"],
   type="group",
@@ -228,6 +277,7 @@ fontAndTextures = {
     },
   },
 },]]--
+
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

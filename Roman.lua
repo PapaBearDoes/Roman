@@ -33,15 +33,16 @@ function Roman:doStartup()
 end
 
 function Roman:doConfig()
+	Roman:ConfigCategoryList()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
 	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
-	RomanOptionFrames.barks = romanConfigDialog:AddToBlizOptions(me, me, nil, "barkSettings")
+	RomanOptionFrames.settings = romanConfigDialog:AddToBlizOptions(me, me, nil, "settings")
 end
 
 function Roman:ShowConfig()
-	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.barks)
-	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.barks)
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
+	InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
 end
 
 function Roman:MiniMapIcon()
@@ -57,7 +58,9 @@ function Roman:OnInitialize()
 		RomanDB:AddToDefaults("profile.options", romanDefaults.options)
 
 		--Register For Updates to Config Changes
-		--RomanDB:RegisterUpdateFunctions("profile.options.general", {})
+		RomanDB:RegisterUpdateFunctions("RomanDB.profile.options.phrases.categories", {
+			LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+		})
 
 		RomanDB.global:Print(10)
 		RomanDB.profile:Print(10)

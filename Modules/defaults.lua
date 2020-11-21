@@ -25,7 +25,9 @@ romanDefaults.options = {
       hide = false,
     },
   },
-  phrases = {},
+  phrases = {
+    categories = {},
+  },
 }
 
 -- Globals Table
