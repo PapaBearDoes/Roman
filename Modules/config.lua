@@ -69,10 +69,10 @@ phrases = {
   name = L["Barks"],
   type = "group",
   order = 1,
+  --childGroups = "tabs",
   args = {
     categories = {
-      order = 0,
-      --inline = true,
+      order = 1,
       name = L["Categories"],
       type="group",
       args = {
@@ -113,7 +113,7 @@ phrases = {
           name = L["AddCategories"],
           type="group",
           args = {
-            add = {
+            addCat = {
               order = 0,
               name = L["AddCategory"],
               desc = L["AddCategoryDesc"],
@@ -131,58 +131,75 @@ phrases = {
     },
     barks = {
       order = 1,
-      --inline = true,
       name = L["Barks"],
       type="group",
       args = {
-        barksListHeader = {
+        barksListGroup = {
           order = 0,
-          name = L["BarksList"],
-          type = "header",
-          width = "full",
-        },
-        barksListDesc = {
-          order = 1,
-          name = "Checking a Bark will delete it from the database", --L["CatListDesc"]
-          type = "description",
-          width = "full",
-        },
-        barksList = {
-          order = 2,
-          name = "",
-          type = "multiselect",
-          width = "full",
-          confirm = true,
-          confirmText =[=[Are you sure you wish to delete this Bark?
-|CFFFF0000This is not recoverable!|r]=],
-          values = function()
-            local list = {}
-            for key, value in RomanDB.profile.options.phrases.barks:Iterate() do
-              list[key] = value
-            end
-            return list
-          end,
-          set = function(v, key)
-            RomanDB.profile.options.phrases.barks[key] = nil
-          end,
-        },
-        addBark = {
-          order = 3,
+          name = L["Barks"],
+          type = "group",
           inline = true,
-          name = L["AddBarks"],
-          type="group",
+          args = {
+            barksListHeader = {
+              order = 0,
+              name = L["BarksList"],
+              type = "header",
+              width = "full",
+            },
+            barksListDesc = {
+              order = 1,
+              name = "Checking a Bark will delete it from the database", --L["CatListDesc"]
+              type = "description",
+              width = "full",
+            },
+            barksList = {
+              order = 2,
+              name = "",
+              type = "multiselect",
+              width = "full",
+              confirm = true,
+              confirmText =[=[Are you sure you wish to delete this Bark?
+    |CFFFF0000This is not recoverable!|r]=],
+              values = function()
+                local list = {}
+                for key, value in RomanDB.profile.options.phrases.barks:Iterate() do
+                  list[key] = value
+                end
+                return list
+              end,
+              set = function(v, key)
+                RomanDB.profile.options.phrases.barks[key] = nil
+                RomanDB:TriggerUpdateFunction("RomanDB.profile.options.phrases")
+              end,
+            },
+          },
+        },
+        addBarksGroup = {
+          order = 0,
+          name = L["Barks"],
+          type = "group",
+          inline = true,
           args = {
             addBark = {
-              order = 0,
-              name = L["AddBark"],
-              desc = L["AddBarkDesc"],
-              type = "input",
-              width = "full",
-              set = function(key, value)
-                local n = RomanDB.profile.options.phrases.barks:GetLength()
-                n = n + 1
-                RomanDB.profile.options.phrases.barks[n] = value
-              end,
+              order = 3,
+              inline = true,
+              name = L["AddBarks"],
+              type="group",
+              args = {
+                bark = {
+                  order = 0,
+                  name = L["AddBark"],
+                  desc = L["AddBarkDesc"],
+                  type = "input",
+                  width = "full",
+                  set = function(key, value)
+                    local n = RomanDB.profile.options.phrases.barks:GetLength()
+                    n = n + 1
+                    RomanDB.profile.options.phrases.barks[n] = value
+                    RomanDB:TriggerUpdateFunction("RomanDB.profile.options.phrases")
+                  end,
+                },
+              },
             },
           },
         },
@@ -194,6 +211,27 @@ phrases = {
     },
   },
 }
+
+function Roman:UpdateConfigBarksList()
+  for key, value in RomanDB.profile.options.phrases.barks:Iterate() do
+    barksListGroup = "barksListGroup" .. key
+    barksList = "barksList" .. key
+    groupName = L["BarksListGroup"] .. key
+    romanConfig.args.settings.args.phrases.args[barksListGroup] = {
+      order = 0,
+      name = groupName,
+      type = "group",
+      inline = true,
+      args = {},
+    }
+    romanConfig.args.settings.args.phrases.args[barksListGroup].args[barksList] = {
+      order = 0,
+      name = value,
+      type = "description",
+      width = "full",
+    }
+  end
+end
 
 --[[combat = {
   name= L["In Combat"],
