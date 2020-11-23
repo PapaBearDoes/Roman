@@ -27,44 +27,45 @@ romanConfig = {
       order = 0,
       type = "group",
       args = {
-generalSettings = {
-  name = L["GeneralSettings"],
-  type = "group",
-  order = 0,
-  args = {
-    general = {
-      order = 0,
-      inline = true,
-      name = L["GeneralSettings"],
-      type = "group",
-      args = {
-        showMiniMapIcon = {
+        generalSettings = {
+          name = L["GeneralSettings"],
+          type = "group",
           order = 0,
-          type = "toggle",
-          name = L["ShowMiniMapIcon"],
-          desc = L["ShowMiniMapIconDesc"],
-          get = function()
-            if RomanDB.profile.options.general.mmIcon.hide == true then
-              show = false
-            else
-              show = true
-            end
-            return show
-          end,
-          set = function(key, value)
-            if value == true then
-              RomanDB.profile.options.general.mmIcon.hide = false
-              RomanIcon:Show("RomanMapIcon")
-            else
-              RomanDB.profile.options.general.mmIcon.hide = true
-              RomanIcon:Hide("RomanMapIcon")
-            end
-          end,
+          args = {
+            general = {
+              order = 0,
+              inline = true,
+              name = L["GeneralSettings"],
+              type = "group",
+              args = {
+                showMiniMapIcon = {
+                  order = 0,
+                  type = "toggle",
+                  name = L["ShowMiniMapIcon"],
+                  desc = L["ShowMiniMapIconDesc"],
+                  get = function()
+                    if RomanDB.profile.options.general.mmIcon.hide == true then
+                      show = false
+                    else
+                      show = true
+                    end
+                    return show
+                  end,
+                  set = function(key, value)
+                    if value == true then
+                      RomanDB.profile.options.general.mmIcon.hide = false
+                      RomanIcon:Show("RomanMapIcon")
+                    else
+                      RomanDB.profile.options.general.mmIcon.hide = true
+                      RomanIcon:Hide("RomanMapIcon")
+                    end
+                  end,
+                },
+              },
+            },
+          },
         },
-      },
-    },
-  },
-},
+
 phrases = {
   name = L["Barks"],
   type = "group",
@@ -72,8 +73,9 @@ phrases = {
   --childGroups = "tabs",
   args = {
     categories = {
-      order = 1,
+      order = 0,
       name = L["Categories"],
+      desc = L["AddDelCategories"],
       type="group",
       args = {
         catListHeader = {
@@ -105,6 +107,12 @@ phrases = {
           end,
           set = function(v, key)
             RomanDB.profile.options.phrases.categories[key] = nil
+            for k, v in RomanDB.profile.options.phrases.barks:Iterate() do
+              RomanDB.profile.options.phrases.barks[k].categories[key] = nil
+            end
+            Roman:AddBarksConfigList()
+            LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+            RomanDB.profile.options.phrases.barks:Print(10)
           end,
         },
         addCategory = {
@@ -123,6 +131,12 @@ phrases = {
                 local n = RomanDB.profile.options.phrases.categories:GetLength()
                 n = n + 1
                 RomanDB.profile.options.phrases.categories[n] = value
+                for k, v in RomanDB.profile.options.phrases.barks:Iterate() do
+                  RomanDB.profile.options.phrases.barks[k].categories[n] = false
+                end
+                Roman:AddBarksConfigList()
+                LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+                RomanDB.profile.options.phrases.barks:Print(10)
               end,
             },
           },
