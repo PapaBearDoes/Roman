@@ -35,7 +35,7 @@ end
 function Roman:doConfig()
 	Roman:AddTestBark()
 	--RomanDB.profile.options.phrases.barks = {}
-	Roman:AddBarksList()
+	Roman:AddBarksConfigList()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
 	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
@@ -60,11 +60,11 @@ function Roman:OnInitialize()
 		RomanDB:AddToDefaults("profile.options", romanDefaults.options)
 
 		--Register For Updates to Config Changes
-		--[[RomanDB:RegisterUpdateFunctions("RomanDB.profile.options.phrases", function()
+		RomanDB:RegisterUpdateFunctions("RomanDB.profile.options.phrases.barks", function()
 			Roman:Print("Barks Updated!")
-			Roman:UpdateConfigBarksList()
+			Roman:AddBarksConfigList()
 			LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-		end)]]--
+		end)
 
 		RomanDB.global:Print(10)
 		RomanDB.profile:Print(10)
