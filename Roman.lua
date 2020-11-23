@@ -33,7 +33,9 @@ function Roman:doStartup()
 end
 
 function Roman:doConfig()
-	Roman:UpdateConfigBarksList()
+	Roman:AddTestBark()
+	--RomanDB.profile.options.phrases.barks = {}
+	Roman:AddBarksList()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable(me, romanConfig, nil)
 	local romanConfigDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
@@ -58,11 +60,11 @@ function Roman:OnInitialize()
 		RomanDB:AddToDefaults("profile.options", romanDefaults.options)
 
 		--Register For Updates to Config Changes
-		RomanDB:RegisterUpdateFunctions("RomanDB.profile.options.phrases", function()
+		--[[RomanDB:RegisterUpdateFunctions("RomanDB.profile.options.phrases", function()
 			Roman:Print("Barks Updated!")
 			Roman:UpdateConfigBarksList()
 			LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-		end)
+		end)]]--
 
 		RomanDB.global:Print(10)
 		RomanDB.profile:Print(10)
@@ -76,6 +78,53 @@ function Roman:OnEnable()
 end
 
 function Roman:OnDisable()
+end
+
+function Roman:AddTestBark()
+	RomanDB.profile.options.phrases.barks = {
+		{
+			categories = {
+				true, true, false,
+			},
+			channels = {
+				true, --General
+				true, --Trade
+				false, --LocalDefense
+				true, -- Say
+			},
+			time = {
+				min = 30,
+				max = 300,
+				pause = 3,
+			},
+			bark = {
+				"Line 1 of bark.  Trunc",
+				"ated add to bark",
+			},
+		},
+		{
+			categories = {
+				true, false, true,
+			},
+			channels = {
+				true, --General
+				true, --Trade
+				false, --LocalDefense
+				true, -- Say
+			},
+			time = {
+				min = 30,
+				max = 300,
+				pause = 3,
+			},
+			bark = {
+				"Line 1 of bark.  Tru",
+				"ncated add to bark",
+			},
+		},
+  }
+
+  RomanDB.profile.options.phrases.barks:Print(5)
 end
 --[[
      ########################################################################

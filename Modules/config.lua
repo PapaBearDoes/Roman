@@ -71,6 +71,8 @@ phrases = {
   order = 1,
   --childGroups = "tabs",
   args = {
+
+
     categories = {
       order = 1,
       name = L["Categories"],
@@ -212,26 +214,166 @@ phrases = {
   },
 }
 
-function Roman:UpdateConfigBarksList()
-  for key, value in RomanDB.profile.options.phrases.barks:Iterate() do
-    barksListGroup = "barksListGroup" .. key
-    barksList = "barksList" .. key
-    groupName = L["BarksListGroup"] .. key
-    romanConfig.args.settings.args.phrases.args[barksListGroup] = {
+function Roman:AddBarksList()
+  local p = romanConfig.args.settings.args.phrases.args
+  local c = {
+    "General",
+    "Trade",
+    "LocalDefense",
+    "Say"
+  }
+
+  for barkKey, barkTable in RomanDB.profile.options.phrases.barks:Iterate() do
+    local barksListGroup = "barkList" .. barkKey
+    local barkCats = "barkCats" .. barkKey
+    local barkChans = "barkChans" .. barkKey
+    local barkTime = "barkTime" .. barkKey
+    local bark = "bark" .. barkKey
+    p[barksListGroup] = {
       order = 0,
-      name = groupName,
       type = "group",
       inline = true,
       args = {},
     }
-    romanConfig.args.settings.args.phrases.args[barksListGroup].args[barksList] = {
-      order = 0,
-      name = value,
-      type = "description",
-      width = "full",
+    p[barksListGroup].name = barksListGroup
+
+    p[barksListGroup].args[barkCats] = {
+      name = L["Categories"],
+      type = "multiselect",
+      values = {},
     }
+    for catIndex, cat in RomanDB.profile.options.phrases.categories:Iterate() do
+      p[barksListGroup].args[barkCats].values[catIndex] = cat
+      p[barksListGroup].args[barkCats].get = function(info, k, v)
+        return RomanDB.profile.options.phrases.barks[barkKey].categories[k]
+      end
+    end
+
+    p[barksListGroup].args[barkChans] = {
+      name = L["Channels"],
+      type = "multiselect",
+      values = {},
+    }
+    for chanIndex, chan in pairs(c) do
+      p[barksListGroup].args[barkChans].values[chanIndex] = chan
+      p[barksListGroup].args[barkChans].get = function(info, k, v)
+        return RomanDB.profile.options.phrases.barks[barkKey].channels[k]
+      end
+    end
+
+    p[barksListGroup].args[barkTime] = {
+      name = L["Times"],
+      type = "group",
+      inline = true,
+      args = {
+        timeMin = {
+          order = 0,
+          name = L["TimeMin"],
+          type = "range",
+          min = 0,
+          softMin = 10,
+          max = 300,
+          step = 1,
+        },
+        timeMax = {
+          order = 1,
+          name = L["TimeMax"],
+          type = "range",
+          min = 0,
+          softMin = 10,
+          max = 300,
+          step = 1,
+        },
+        timePause = {
+          order = 2,
+          name = L["TimePause"],
+          type = "range",
+          min = 0,
+          softMin = 10,
+          max = 300,
+          step = 1,
+        },
+      },
+    }
+    p[barksListGroup].args[barkTime].args.timeMin.get = function()
+        return RomanDB.profile.options.phrases.barks[barkKey].time.min
+    end
+    p[barksListGroup].args[barkTime].args.timeMax.get = function()
+        return RomanDB.profile.options.phrases.barks[barkKey].time.max
+    end
+    p[barksListGroup].args[barkTime].args.timePause.get = function()
+        return RomanDB.profile.options.phrases.barks[barkKey].time.pause
+    end
+
+    p[barksListGroup].args[bark] = {
+      name = L["Bark"],
+      type = "input",
+      width = "full",
+      multiline = true,
+    }
+
+    local barkValue = ""
+    for iBark, barkVal in RomanDB.profile.options.phrases.barks[barkKey].bark:Iterate() do
+      barkValue = barkValue .. "" .. barkVal
+      p[barksListGroup].args[bark].get = function()
+        return barkValue
+      end
+    end
+
+    --[[for channelNum, channelName in pairs(barkTable.channels) do
+      if channels == "" then
+        channels = channelName
+      else
+        channels = channelName .. ", " .. channels
+      end
+    end
+    timeMin = barkTable.time.min
+    timeMax = barkTable.time.max
+    timePause = barkTable.time.pause
+    for key, value in pairs(barkTable.bark) do
+      if bark == "" then
+        bark = value
+      else
+        bark = bark .. " " .. value
+      end
+    end
   end
+
+  list = categories .. "\n" .. channels .. "\n" .. timeMin .. "\n" .. timeMax .. "\n" .. timePause .. "\n" .. bark
+
+  Roman:Print(list)
+
+  return list]]--
 end
+end
+--[[
+Barks table setup
+
+RomanDB.profile.options.phrases.barks = {
+  barkIndexKey = {
+    categories = {
+      catIndex = cat,
+      catIndex2 = cat2,
+      ...,
+    },
+    channels = {
+      channelNum = channelName,
+      channelNum2 = channelName,
+      ...,
+    },
+    time = {
+      min = 30,
+      max = 300,
+      pause = 3,
+    },
+    bark = {
+      barkIndex = "",
+      BarkIndex2 = "", --In case bark is longer than 250 characters
+      ...,
+    },
+  },
+}
+]]--
 
 --[[combat = {
   name= L["In Combat"],
