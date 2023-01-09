@@ -1,4 +1,4 @@
-package-as: AddonStub
+package-as: Roman
 license-output: LICENSE
 enable-nolib-creation: no
 

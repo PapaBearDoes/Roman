@@ -4,7 +4,7 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?

@@ -9,23 +9,20 @@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
+local _G = _G
 local myName, addon = ...
-local L = LibStub("AceLocale-3.0"):NewLocale(myName, "zhCN")
-local L = L or {}
+local Roman = addon
+local moduleLibs = {
+  "AceComm-3.0",
+  "AceConfig-3.0",
+  "AceSerializer-3.0",
+}
+local RomanSettingComms = Roman:NewModule("RomanSettingComms", moduleLibs)
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
---[[
-L["Phrase"] = "Translation"
-L["Phrase"] = true
-L["SubNameSpace"] = {
-  L["Phrase"] = "Translation"
-  L["Phrase"] = true
-}
-]]
---[[ ######################################################################## ]]
 --   ## Do All The Things!!!
--- zhCN Localization
---@localization(locale="zhCN", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
+
 
 --[[
      ########################################################################

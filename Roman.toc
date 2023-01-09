@@ -1,7 +1,7 @@
 ## Interface: 100002
 
 #Meta
-## Title: AddonStub
+## Title: Roman
 ## Author: PapaBearDoes
 ## Notes: 
 ## Notes-deDE: 
@@ -24,7 +24,7 @@
 ## X-Curse-Project-ID: 
 
 # Functionality
-## SavedVariables: AddonStubSV
+## SavedVariables: RomanSV
 
 # Load Libs
 Libs\LibInit\Libinit.xml
@@ -35,7 +35,7 @@ Libs\LibDialog-1.0\LibDialog-1.0.lua
 Locales\locales.xml
 
 # Load Main file(s)
-AddonStub.lua
+Roman.lua
 
 # Load Includes
 Includes\includes.xml

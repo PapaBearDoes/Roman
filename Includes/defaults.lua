@@ -4,20 +4,20 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
 local _G = _G
 local myName, addon = ...
-local AddonStub = addon
-local L = AddonStub:GetLocale()
+local Roman = addon
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 -- Create DB defaults
-AddonStub.dbDefaults = {
+Roman.dbDefaults = {
   global = {
   },
   profile = {

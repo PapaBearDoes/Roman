@@ -4,20 +4,20 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
 local _G = _G
 local myName, addon = ...
-local AddonStub = addon
-local L = AddonStub:GetLocale()
+local Roman = addon
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 --OptionsTable
-AddonStub.options = {
+Roman.options = {
   type = "group",
   name = myName,
   args = {
@@ -38,12 +38,12 @@ AddonStub.options = {
           name = L["DoThing"],
           desc = L["DoThingDesc"],
           get = function()
-            return AddonStub.db.profile.doThing
+            return Roman.db.profile.doThing
           end,
           set = function(key, value)
-            AddonStub.db.profile.doThing = value
-            if not AddonStub.db.profile.doThjing then
-              AddonStub.db.profile.doThing = value
+            Roman.db.profile.doThing = value
+            if not Roman.db.profile.doThjing then
+              Roman.db.profile.doThing = value
             end
           end,
         },
@@ -53,7 +53,7 @@ AddonStub.options = {
           name = L["ShowMinimapButton"],
           desc = L["ShowMinimapButtonDesc"],
           get = function()
-            if AddonStub.db.profile.mmIcon.hide == true then
+            if Roman.db.profile.mmIcon.hide == true then
               show = false
             else
               show = true
@@ -62,11 +62,11 @@ AddonStub.options = {
           end,
           set = function(key, value)
             if value == true then
-              AddonStub.db.profile.mmIcon.hide = false
-              AddonStubIcon:Show(myName .. "_mapIcon")
+              Roman.db.profile.mmIcon.hide = false
+              RomanIcon:Show(myName .. "_mapIcon")
             else
-              AddonStub.db.profile.mmIcon.hide = true
-              AddonStubIcon:Hide(myName .. "_mapIcon")
+              Roman.db.profile.mmIcon.hide = true
+              RomanIcon:Hide(myName .. "_mapIcon")
             end
           end
         },

@@ -4,14 +4,14 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
 local _G = _G
 local myName, addon = ...
-local AddonStub = addon
+local Roman = addon
 local initModuleLibs = {
   "AceConfig-3.0",
   "AceConsole-3.0",
@@ -23,8 +23,8 @@ local initModuleLibs = {
   "AceLocale-3.0",
   "AceTimer-3.0"
 }
-local AddonStubModule = AddonStub:NewModule("AddonStubMain", initModuleLibs)
-local L = AddonStub:GetLocale()
+local RomanModule = Roman:NewModule("RomanMain", initModuleLibs)
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!

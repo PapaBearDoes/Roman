@@ -4,15 +4,15 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
 local _G = _G
 local myName, addon = ...
-local AddonStub = addon
-local L = AddonStub:GetLocale()
+local Roman = addon
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
@@ -20,26 +20,26 @@ local L = AddonStub:GetLocale()
 --[[ End Addon Functions ]]
 
 --[[ Main Functions ]]
-function AddonStub:ShowConfig()
-  InterfaceOptionsFrame_OpenToCategory(AddonStubFrames.general)
-  InterfaceOptionsFrame_OpenToCategory(AddonStubFrames.custom)
-  InterfaceOptionsFrame_OpenToCategory(AddonStubFrames.profile)
+function Roman:ShowConfig()
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.general)
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.custom)
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.profile)
 end
 
-function AddonStub:UpdateOptions()
+function Roman:UpdateOptions()
   LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
 end
 
-function AddonStub:UpdateProfile()
-  AddonStub:ScheduleTimer("UpdateProfileDelayed", 0)
+function Roman:UpdateProfile()
+  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
 end
 
-function AddonStub:OnProfileChanged(event, database, newProfileKey)
-  AddonStub.db.profile = database.profile
+function Roman:OnProfileChanged(event, database, newProfileKey)
+  Roman.db.profile = database.profile
 end
 
-function AddonStub:UpdateProfileDelayed()
-  for timerKey, timerValue in AddonStub:IterateModules() do
+function Roman:UpdateProfileDelayed()
+  for timerKey, timerValue in Roman:IterateModules() do
     if timerValue.db.profile.on then
       if timerValue:IsEnabled() then
         timerValue:Disable()
@@ -51,10 +51,10 @@ function AddonStub:UpdateProfileDelayed()
       timerValue:Disable()
     end
   end
-  AddonStub:UpdateOptions()
+  Roman:UpdateOptions()
 end
 
-function AddonStub:OnProfileReset()
+function Roman:OnProfileReset()
 end
 --[[ End Main Functions ]]
 --[[

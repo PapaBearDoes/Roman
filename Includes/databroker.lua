@@ -4,28 +4,28 @@
                                    (| (.)(.) |)
      .---------------------------.OOOo--()--oOOO.---------------------------.
      |                                                                      |
-     |  PapaBearDoes's DadGratz Addon for World of Warcraft                 |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                 |
      |  @project-version@
      ######################################################################## ]]
 --   ## Let's init this file shall we?
 -- Imports
 local _G = _G
 local myName, addon = ...
-local AddonStub = addon
-local L = AddonStub:GetLocale()
+local Roman = addon
+local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 --LDB
-AddonStub_LDB = LibStub("LibDataBroker-1.1")
-AddonStubLDB = AddonStub_LDB:NewDataObject("DadGratzLDB", {
+Roman_LDB = LibStub("LibDataBroker-1.1")
+RomanLDB = Roman_LDB:NewDataObject("DadGratzLDB", {
   type = "data source",
   label = myName,
   text = "",
   icon = "Interface\\Icons\\Achievement_guildperk_bartering",
   OnClick = function(frame, click)
     if click == "RightButton" then
-      AddonStub:ShowConfig()
+      Roman:ShowConfig()
     end
   end,
   OnTooltipShow = function(tooltip)
@@ -35,14 +35,14 @@ AddonStubLDB = AddonStub_LDB:NewDataObject("DadGratzLDB", {
     tooltip:AddLine(myName .. " " .. GetAddOnMetadata(myName, L["Version"]))
     
     tooltip:AddLine(" ")
-    tooltip:AddLine(AddonStub:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])
+    tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])
   end,
 })
 
-function AddonStub:MiniMapIcon()
-  AddonStubIcon = LibStub("LibDBIcon-1.0")
-  if not AddonStubIcon:IsRegistered(myName .. "_mapIcon") then
-    AddonStubIcon:Register(myName .. "_mapIcon", AddonStubLDB, AddonStub.db.profile.mmIcon)
+function Roman:MiniMapIcon()
+  RomanIcon = LibStub("LibDBIcon-1.0")
+  if not RomanIcon:IsRegistered(myName .. "_mapIcon") then
+    RomanIcon:Register(myName .. "_mapIcon", RomanLDB, Roman.db.profile.mmIcon)
   end
 end
 --[[
