@@ -1,0 +1,14 @@
+package-as: AddonStub
+license-output: LICENSE
+enable-nolib-creation: no
+
+externals:
+  Libs\LibInit: https://github.com/alarofrunetotem/LibInit.git/LibInit
+  Libs\LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk
+  Libs\LibDialog-1.0: https://repos.wowace.com/wow/libdialog-1-0
+  
+ignore:
+  - ToDo
+  - .git
+  - .gitattributes
+  - CHANGES.txt
