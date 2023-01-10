@@ -17,11 +17,6 @@ local L = Roman:GetLocale()
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
 function Roman:Main()
-  print("Roman Globals:")
-  DevTools_Dump(Roman.db.global)
-  print("")
-  print("Roman Defaults:")
-  DevTools_Dump(Roman.db.profile)
 end
 --[[
      ########################################################################
