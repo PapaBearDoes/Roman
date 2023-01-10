@@ -19,8 +19,6 @@ local initOptions = {
   enhancedProfile = true
 }
 local Roman = LibStub("LibInit"):NewAddon(addon, myName, initOptions, true)
-Roman:SetDefaultModuleLibraries("AceConfig-3.0", "AceConsole-3.0", "AceDB-3.0", "AceDBOptions-3.0", "AceEvent-3.0", "AceGUI-3.0", "AceHook-3.0", "AceLocale-3.0", "AceTimer-3.0")
-Roman:SetDefaultModuleState(true)
 local L = Roman:GetLocale()
 -- End Imports
 --   ######################################################################## ]]
@@ -35,14 +33,6 @@ function Roman:OnInitialize()
   Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(Roman.db)
   LibStub("AceConfig-3.0"):RegisterOptionsTable(myName, Roman.options, nil)
 
-  -- Enable/disable modules based on saved settings
-	for name, module in Roman:IterateModules() do
-		module:SetEnabledState(Roman.db.profile.moduleEnabledState[name] or false)
-    if module.OnEnable then
-      hooksecurefunc(module, "OnEnable", Roman.OnModuleEnable_Common)
-    end
-  end
-
   --Roman:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
   Roman:MiniMapIcon()
 end
@@ -54,7 +44,41 @@ function Roman:OnEnable()
   RomanOptionFrames.profile = RomanDialog:AddToBlizOptions(myName, L["Profiles"], myName, L["profile"])
 end
 
-function Roman:OnModuleEnable_Common()
+function Roman:ShowConfig()
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.general)
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.custom)
+  InterfaceOptionsFrame_OpenToCategory(RomanFrames.profile)
+end
+
+function Roman:UpdateOptions()
+  LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+end
+
+function Roman:UpdateProfile()
+  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
+end
+
+function Roman:OnProfileChanged(event, database, newProfileKey)
+  Roman.db.profile = database.profile
+end
+
+function Roman:UpdateProfileDelayed()
+  for timerKey, timerValue in Roman:IterateModules() do
+    if timerValue.db.profile.on then
+      if timerValue:IsEnabled() then
+        timerValue:Disable()
+        timerValue:Enable()
+      else
+        timerValue:Enable()
+      end
+    else
+      timerValue:Disable()
+    end
+  end
+  Roman:UpdateOptions()
+end
+
+function Roman:OnProfileReset()
 end
 --[[
      ########################################################################
