@@ -35,50 +35,14 @@ function Roman:OnInitialize()
 
   --Roman:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
   Roman:MiniMapIcon()
+  Roman:Main()
 end
 
 function Roman:OnEnable()
-  local RomanDialog = LibStub("AceConfigDialog-3.0")
-  RomanFrames = {}
-  RomanFrames.general = RomanDialog:AddToBlizOptions(myName, nil, nil, L["general"])
-  RomanOptionFrames.profile = RomanDialog:AddToBlizOptions(myName, L["Profiles"], myName, L["profile"])
-end
-
-function Roman:ShowConfig()
-  InterfaceOptionsFrame_OpenToCategory(RomanFrames.general)
-  InterfaceOptionsFrame_OpenToCategory(RomanFrames.custom)
-  InterfaceOptionsFrame_OpenToCategory(RomanFrames.profile)
-end
-
-function Roman:UpdateOptions()
-  LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-end
-
-function Roman:UpdateProfile()
-  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
-end
-
-function Roman:OnProfileChanged(event, database, newProfileKey)
-  Roman.db.profile = database.profile
-end
-
-function Roman:UpdateProfileDelayed()
-  for timerKey, timerValue in Roman:IterateModules() do
-    if timerValue.db.profile.on then
-      if timerValue:IsEnabled() then
-        timerValue:Disable()
-        timerValue:Enable()
-      else
-        timerValue:Enable()
-      end
-    else
-      timerValue:Disable()
-    end
-  end
-  Roman:UpdateOptions()
-end
-
-function Roman:OnProfileReset()
+  local RomanOptionsDialog = LibStub("AceConfigDialog-3.0")
+  RomanOptionFrames = {}
+  RomanOptionFrames.general = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, L["general"])
+  RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, L["profile"])
 end
 --[[
      ########################################################################
