@@ -18,11 +18,11 @@ local L = Roman:GetLocale()
 --   ## Do All The Things!!!
 --LDB
 Roman_LDB = LibStub("LibDataBroker-1.1")
-RomanLDB = Roman_LDB:NewDataObject("DadGratzLDB", {
+RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
   type = "data source",
   label = myName,
   text = "",
-  icon = "Interface\\Icons\\Achievement_guildperk_bartering",
+  icon = "Interface\\Icons\\Inv_aussiepup_bcollie",
   OnClick = function(frame, click)
     if click == "RightButton" then
       Roman:ShowConfig()
