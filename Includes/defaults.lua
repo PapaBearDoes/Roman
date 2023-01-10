@@ -19,6 +19,32 @@ local L = Roman:GetLocale()
 -- Create DB defaults
 Roman.dbDefaults = {
   global = {
+    message = {
+      type = {
+        [1] = "GuildRecruitment",
+        [2] = "Trade",
+        [3] = "LookingForGroup",
+        [4] = "Dungeons",
+        [5] = "Raid",
+        [6] = "Battleground",
+        [7] = "Guild",
+      },
+      channel = {
+        [1] = "General",
+        [2] = "Trade",
+        [3] = "LocalDefense",
+        [4] = "LookingForGroup",
+        [5] = "Trade(Services)",
+        [6] = "Instance",
+        [7] = "Party",
+        [8] = "Raid",
+        [9] = "RaidWarning",
+        [10] = "Say",
+        [11] = "Yell",
+        [12] = "Guild",
+        [13] = "Officer",
+      },
+    },
   },
   profile = {
     testMode = false,
@@ -26,6 +52,18 @@ Roman.dbDefaults = {
     mmIcon = {
       hide = false,
       minimapPos = 205,
+    },
+    messages = {
+      [1] = {
+        type = 1,
+        channels = {
+          1,
+          2,
+          4,
+        },
+        message = "Message",
+        timer = 45,
+      },
     },
   },
 }
