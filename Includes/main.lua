@@ -12,23 +12,17 @@
 local _G = _G
 local myName, addon = ...
 local Roman = addon
-local initModuleLibs = {
-  "AceConfig-3.0",
-  "AceConsole-3.0",
-  "AceDB-3.0",
-  "AceDBOptions-3.0",
-  "AceEvent-3.0",
-  "AceGUI-3.0",
-  "AceHook-3.0",
-  "AceLocale-3.0",
-  "AceTimer-3.0"
-}
-local RomanModule = Roman:NewModule("RomanMain", initModuleLibs)
 local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-
+function Roman:Main()
+  print("Roman Globals:")
+  DevTools_Dump(Roman.db.global)
+  print("")
+  print("Roman Defaults:")
+  DevTools_Dump(Roman.db.profile)
+end
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@
