@@ -33,9 +33,16 @@ function Roman:OnInitialize()
   Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(Roman.db)
   LibStub("AceConfig-3.0"):RegisterOptionsTable(myName, Roman.options, nil)
 
-  --Roman:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
   Roman:MiniMapIcon()
+
+  Roman:RegisterChatCommand("roman", "ShowUI")
+
   Roman:Main()
+  
+  Roman:Print("Addon Loaded")
+  if Roman.db.profile.debug == true then
+    Roman:Print("Debug On")
+  end
 end
 
 function Roman:OnEnable()
