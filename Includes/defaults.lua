@@ -47,7 +47,7 @@ Roman.dbDefaults = {
     },
   },
   profile = {
-    testMode = false,
+    debug = false,
     doThing = true,
     mmIcon = {
       hide = false,
