@@ -37,6 +37,7 @@ L["ShowMinimapButtonDesc"] = "Show Minimap Button Description"
 L["Version"] = true
 L["RightClick"] = "Right Click"
 L["RightClickToolTip"] = "Right Click Tooltip"
+L["MessageBarkerForWoW"] = "Message Barker for WoW"
 
 L["DoThing"] = "Do The Thing"
 L["DoThingDesc"] = "Do The Thing Description"
