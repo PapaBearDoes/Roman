@@ -16,12 +16,6 @@ local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-function Roman:ShowConfig()
-  InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.general)
-  InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.custom)
-  InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.profile)
-end
-
 function Roman:UpdateOptions()
   LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
 end
