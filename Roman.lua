@@ -48,8 +48,15 @@ end
 function Roman:OnEnable()
   local RomanOptionsDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
-  RomanOptionFrames.general = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, L["general"])
-  RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, L["profile"])
+  RomanOptionFrames.settings = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, "settings")
+  RomanOptionFrames.recruit = RomanOptionsDialog:AddToBlizOptions(myName, L["GuildRecruitment"], myName, "recruit")
+  RomanOptionFrames.trade = RomanOptionsDialog:AddToBlizOptions(myName, L["Trade"], myName, "trade")
+  RomanOptionFrames.LFG = RomanOptionsDialog:AddToBlizOptions(myName, L["LFG"], myName, "LFG")
+  RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, "profile")
+end
+
+function Roman:ShowConfig()
+  InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
 end
 --[[
      ########################################################################
