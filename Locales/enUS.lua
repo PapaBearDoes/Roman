@@ -26,10 +26,11 @@ L["SubNameSpace"] = {
 --   ## Do All The Things!!!
 -- enUS Localization
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
-L["general"] = true
-L["GeneralSettings"] = true
+L["GeneralSettings"] = "General Settings"
+L["GuildRecruitment"] = "Guild Recruitment"
+L["Trade"] = true
+L["LFG"] = "Looking For Group"
 L["Profiles"] = true
-L["profile"] = true
 L["Options"] = true
 L["Default"] = true
 L["ShowMinimapButton"] = "Show Minimap Button"
