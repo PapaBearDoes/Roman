@@ -21,8 +21,92 @@ Roman.options = {
   type = "group",
   name = myName,
   args = {
-    general = {
+    recruit = {
       order = 1,
+      type = "group",
+      name = L["GuildRecruitment"],
+      cmdInline = true,
+      args = {
+        separator1 = {
+          order = 1,
+          type = "header",
+          name = L["GuildRecruitment"],
+        },
+        doThing = {
+          order = 2,
+          type = "toggle",
+          name = L["DoThing"],
+          desc = L["DoThingDesc"],
+          get = function()
+            return Roman.db.profile.doThing
+          end,
+          set = function(key, value)
+            Roman.db.profile.doThing = value
+            if not Roman.db.profile.doThjing then
+              Roman.db.profile.doThing = value
+            end
+          end,
+        },
+      },
+    },
+    trade = {
+      order = 2,
+      type = "group",
+      name = L["Trade"],
+      cmdInline = true,
+      args = {
+        separator1 = {
+          order = 1,
+          type = "header",
+          name = L["Trade"],
+        },
+        doThing = {
+          order = 2,
+          type = "toggle",
+          name = L["DoThing"],
+          desc = L["DoThingDesc"],
+          get = function()
+            return Roman.db.profile.doThing
+          end,
+          set = function(key, value)
+            Roman.db.profile.doThing = value
+            if not Roman.db.profile.doThjing then
+              Roman.db.profile.doThing = value
+            end
+          end,
+        },
+      },
+    },
+    LFG = {
+      order = 3,
+      type = "group",
+      name = L["LFG"],
+      cmdInline = true,
+      args = {
+        separator1 = {
+          order = 1,
+          type = "header",
+          name = L["LFG"],
+        },
+        doThing = {
+          order = 2,
+          type = "toggle",
+          name = L["DoThing"],
+          desc = L["DoThingDesc"],
+          get = function()
+            return Roman.db.profile.doThing
+          end,
+          set = function(key, value)
+            Roman.db.profile.doThing = value
+            if not Roman.db.profile.doThjing then
+              Roman.db.profile.doThing = value
+            end
+          end,
+        },
+      },
+    },
+    settings = {
+      order = 4,
       type = "group",
       name = L["GeneralSettings"],
       cmdInline = true,
