@@ -26,6 +26,8 @@ RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
   OnClick = function(frame, click)
     if click == "RightButton" then
       Roman:ShowConfig()
+    elseif click == "LeftButton" then
+      Roman:ShowUI()
     end
   end,
   OnTooltipShow = function(tooltip)
@@ -33,7 +35,7 @@ RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
       return
     end
     tooltip:AddLine(myName .. " " .. GetAddOnMetadata(myName, L["Version"]))
-    
+    tooltip:AddLine(Roman:Colorize(L["LeftClick"] .. " ", "eda55f") .. L["LeftClickToolTip"])
     tooltip:AddLine(" ")
     tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])
   end,

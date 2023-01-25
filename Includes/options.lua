@@ -32,24 +32,24 @@ Roman.options = {
           type = "header",
           name = L["GuildRecruitment"],
         },
-        doThing = {
+        useGuildFinder = {
           order = 2,
           type = "toggle",
-          name = L["DoThing"],
-          desc = L["DoThingDesc"],
+          name = L["UseGuildFinder"],
+          desc = L["UseGuildFinderDesc"],
           get = function()
-            return Roman.db.profile.doThing
+            return Roman.db.profile.messages.guildRecruit.useGuildFinder
           end,
           set = function(key, value)
-            Roman.db.profile.doThing = value
-            if not Roman.db.profile.doThjing then
-              Roman.db.profile.doThing = value
+            Roman.db.profile.messages.guildRecruit.useGuildFinder = value
+            if not Roman.db.profile.messages.guildRecruit.useGuildFinder then
+              Roman.db.profile.messages.guildRecruit.useGuildFinder = value
             end
           end,
         },
       },
     },
-    trade = {
+--[[    trade = {
       order = 2,
       type = "group",
       name = L["Trade"],
@@ -104,7 +104,7 @@ Roman.options = {
           end,
         },
       },
-    },
+    },]]
     settings = {
       order = 4,
       type = "group",
@@ -116,7 +116,7 @@ Roman.options = {
           type = "header",
           name = L["Options"],
         },
-        doThing = {
+        --[[doThing = {
           order = 2,
           type = "toggle",
           name = L["DoThing"],
@@ -130,7 +130,7 @@ Roman.options = {
               Roman.db.profile.doThing = value
             end
           end,
-        },
+        },]]
         showMinimapButton = {
           order = 5,
           type = "toggle",

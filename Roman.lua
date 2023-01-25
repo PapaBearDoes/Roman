@@ -33,10 +33,11 @@ function Roman:OnInitialize()
   Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(Roman.db)
   LibStub("AceConfig-3.0"):RegisterOptionsTable(myName, Roman.options, nil)
 
-  Roman:MiniMapIcon()
-
+  Roman:RegisterEvent("ZONE_CHANGED_NEW_AREA")
   Roman:RegisterChatCommand("roman", "ShowUI")
-
+  
+  Roman:Init()
+  
   Roman:Main()
   
   Roman:Print("Addon Loaded")
@@ -50,8 +51,8 @@ function Roman:OnEnable()
   RomanOptionFrames = {}
   RomanOptionFrames.settings = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, "settings")
   RomanOptionFrames.recruit = RomanOptionsDialog:AddToBlizOptions(myName, L["GuildRecruitment"], myName, "recruit")
-  RomanOptionFrames.trade = RomanOptionsDialog:AddToBlizOptions(myName, L["Trade"], myName, "trade")
-  RomanOptionFrames.LFG = RomanOptionsDialog:AddToBlizOptions(myName, L["LFG"], myName, "LFG")
+--  RomanOptionFrames.trade = RomanOptionsDialog:AddToBlizOptions(myName, L["Trade"], myName, "trade")
+--  RomanOptionFrames.LFG = RomanOptionsDialog:AddToBlizOptions(myName, L["LFG"], myName, "LFG")
   RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, "profile")
 end
 

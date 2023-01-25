@@ -17,91 +17,121 @@ local RomanUI = LibStub("AceGUI-3.0")
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
-function Roman:ShowUI()
-  -- Draw the Guild Recruitment barks tab
-  local function DrawTab1(container)
-    local editTab1 = RomanUI:Create("InlineGroup")
+-- Draw the Guild Recruitment barks tab
+function Roman:DrawTab1(container)
+  local editTab1 = RomanUI:Create("InlineGroup")
+    if Roman.db.global.debug == true then
+      Roman:Print("General: " .. (Roman.db.profile.messages.guildRecruit.channels.General and 'true' or 'false'))
+      Roman:Print("Trade: " .. (Roman.db.profile.messages.guildRecruit.channels.Trade and 'true' or 'false'))
+      Roman:Print("LookingForGroup: " .. (Roman.db.profile.messages.guildRecruit.channels.LookingForGroup and 'true' or 'false'))
+      Roman:Print("Time: " .. Roman.db.profile.messages.guildRecruit.time)
+      Roman:Print("Message: " .. Roman.db.profile.messages.guildRecruit.message)
+    end
     editTab1:SetTitle("Guild Recruitment Barks")
-    editTab1:SetLayout("Flow")
     editTab1:SetFullWidth(true)
+    editTab1:SetLayout("Flow")
+    Roman:BarkChannels(editTab1, "GuildRecruitment")
+    Roman:BarkTime(editTab1, Roman.db.profile.messages.guildRecruit.time)
+    Roman:EditBark(editTab1)
+  container:AddChild(editTab1)
+end
 
-      local editChans1 = RomanUI:Create("InlineGroup")
-      editChans1:SetLayout("Flow")
-      editChans1:SetRelativeWidth(0.5)
-      editChans1:SetTitle("Which channels should we bark in?")
-      
-        local genChan1 = RomanUI:Create("CheckBox")
-        genChan1:SetType("checkbox")
-        genChan1:SetLabel("General")
-        --Add stuff here
-        editChans1:AddChild(genChan1)
-        
-        local tradeChan1 = RomanUI:Create("CheckBox")
-        tradeChan1:SetType("checkbox")
-        tradeChan1:SetLabel("Trade")
-        --Add stuff here
-        editChans1:AddChild(tradeChan1)
-        
-        local LFGChan1 = RomanUI:Create("CheckBox")
-        LFGChan1:SetType("checkbox")
-        LFGChan1:SetLabel("Looking For Group")
-        --Add stuff here
-        editChans1:AddChild(LFGChan1)
-      
-      editTab1:AddChild(editChans1)
-      
-      local editTime1 = RomanUI:Create("Slider")
-      editTime1:SetSliderValues(15, 180, 5)
-      editTime1:SetRelativeWidth(0.5)
-      editTime1:SetLabel("How long in between barks (in minutes)?")
-      editTime1:SetCallback("OnMouseUp", function(_, _, data) DevTools_Dump(data) end)
-      editTab1:AddChild(editTime1)
-      
-      local editBox1 = RomanUI:Create("MultiLineEditBox")
-      editBox1:SetLabel("Add Bark (Max 250 Chars)")
-      editBox1:SetFullWidth(true)
-      editBox1:SetNumLines(3)
-      editBox1:SetMaxLetters(250)
-      editBox1:SetFocus()
-      editBox1:SetCallback("OnEnterPressed", function(_, _, data) DevTools_Dump(data) end)
-      editTab1:AddChild(editBox1)
-      
-      container:AddChild(editTab1)
-    
-    local scrollTab1 = RomanUI:Create("InlineGroup")
-    scrollTab1:SetTitle("Guild Recruitment Barks")
-    scrollTab1:SetFullWidth(true)
-    scrollTab1:SetFullHeight(true)
-    scrollTab1:SetLayout("Fill")
-    container:AddChild(scrollTab1)
+--[[
+-- Draw the Trade barks tab
+function Roman:DrawTab2(container)
+  local scrollTab2 = RomanUI:Create("InlineGroup")
+  scrollTab2:SetFullWidth(true)
+  scrollTab2:SetFullHeight(true)
+  scrollTab2:SetLayout("Fill")
+  container:AddChild(scrollTab2)
+end
+
+-- Draw the LFG barks tab
+function Roman:DrawTab3(container)
+  local scrollTab3 = RomanUI:Create("InlineGroup")
+  scrollTab3:SetFullWidth(true)
+  scrollTab3:SetFullHeight(true)
+  scrollTab3:SetLayout("Fill")
+  container:AddChild(scrollTab3)
+end
+]]
+
+function Roman:EditBark(container)
+  local editBox = RomanUI:Create("MultiLineEditBox")
+  editBox:SetDisabled(Roman.db.profile.messages.guildRecruit.useGuildFinder)
+  editBox:SetLabel("Bark (Max 250 Chars)")
+  editBox:SetFullWidth(true)
+  editBox:SetNumLines(4)
+  editBox:SetMaxLetters(250)
+  if Roman.db.profile.messages.guildRecruit.useGuildFinder == true then
+    local message = Roman:MakeGuildRecruitMessage()
+    editBox:SetText(message[2])
+  else
+    editBox:SetText(Roman.db.profile.messages.guildRecruit.message)
   end
   
-  -- Draw the Trade barks tab
-  function DrawTab2(container)
-    local scrollTab2 = RomanUI:Create("InlineGroup")
-    scrollTab2:SetFullWidth(true)
-    scrollTab2:SetFullHeight(true)
-    scrollTab2:SetLayout("Fill")
-    container:AddChild(scrollTab2)
-  end
-  
-  -- Draw the LFG barks tab
-  function DrawTab3(container)
-    local scrollTab3 = RomanUI:Create("InlineGroup")
-    scrollTab3:SetFullWidth(true)
-    scrollTab3:SetFullHeight(true)
-    scrollTab3:SetLayout("Fill")
-    container:AddChild(scrollTab3)
-  end
+  editBox:SetCallback("OnEnterPressed", function(_, _, text)
+    Roman.db.profile.messages.guildRecruit.message = text
+    Roman:UpdateProfile()
+  end)
+  container:AddChild(editBox)
+end
 
+function Roman:BarkChannels(container, type)
+  local editChans = RomanUI:Create("InlineGroup")
+    editChans:SetLayout("Flow")
+    editChans:SetRelativeWidth(0.5)
+    editChans:SetTitle("Which channels should we bark in?")
+    if type == "GuildRecruitment" then
+      Roman:BarkChannelCheckBox(editChans, "General", Roman.db.profile.messages.guildRecruit.channels.General)
+      Roman:BarkChannelCheckBox(editChans, "Trade", Roman.db.profile.messages.guildRecruit.channels.Trade)
+      Roman:BarkChannelCheckBox(editChans, "LookingForGroup", Roman.db.profile.messages.guildRecruit.channels.LookingForGroup)
+    elseif type == "Trade" then
+    elseif type == "LookingForGroup" then
+    end
+  container:AddChild(editChans)
+end
+
+function Roman:BarkChannelCheckBox(container, channel, checked)
+  local Channel = RomanUI:Create("CheckBox")
+  Channel:SetType("checkbox")
+  Channel:SetValue(checked)
+  Channel:SetLabel(channel)
+  Channel:SetCallback("OnValueChanged", function(_, _, value)
+    if channel == "General" then
+      Roman.db.profile.messages.guildRecruit.channels.General = value
+    elseif channel == "Trade" then
+      Roman.db.profile.messages.guildRecruit.channels.Trade = value
+    elseif channel == "LookingForGroup" then
+      Roman.db.profile.messages.guildRecruit.channels.LookingForGroup = value
+    end
+    Roman:UpdateProfile()
+  end)
+  container:AddChild(Channel)
+end
+
+function Roman:BarkTime(container, time)
+  local editTime = RomanUI:Create("Slider")
+  editTime:SetSliderValues(15, 180, 5)
+  editTime:SetRelativeWidth(0.5)
+  editTime:SetValue(time)
+  editTime:SetLabel("How long in between barks (in minutes)?")
+  editTime:SetCallback("OnMouseUp", function(_, _, time)
+    Roman.db.profile.messages.guildRecruit.time = time
+    Roman:UpdateProfile()
+  end)
+  container:AddChild(editTime)
+end
+
+function Roman:ShowUI()
   local function SelectTab(container, event, group)
     container:ReleaseChildren()
     if group == "tab1" then
-      DrawTab1(container)
-    elseif group == "tab2" then
-      DrawTab2(container)
-    elseif group == "tab3" then
-      DrawTab3(container)
+      Roman:DrawTab1(container)
+--    elseif group == "tab2" then
+--      Roman:DrawTab2(container)
+--    elseif group == "tab3" then
+--      Roman:DrawTab3(container)
     end
   end
 
@@ -109,7 +139,7 @@ function Roman:ShowUI()
   local frame = RomanUI:Create("Frame")
   frame:SetTitle("Roman")
   frame:SetStatusText("A Message Barker")
-  frame:SetHeight(600)
+  frame:SetHeight(400)
   frame:SetCallback("OnClose", function(widget) RomanUI:Release(widget) end)
   frame:SetLayout("Fill")
   
@@ -119,12 +149,12 @@ function Roman:ShowUI()
   tab:SetTabs({{
     text="Guild Recruitment",
     value="tab1"
-  }, {
-    text="Trade",
-    value="tab2"
-  }, {
-    text="LFG",
-    value="tab3"
+--  }, {
+--    text="Trade",
+--    value="tab2"
+--  }, {
+--    text="LFG",
+--    value="tab3"
   }})
   tab:SetCallback("OnGroupSelected", SelectTab)
 

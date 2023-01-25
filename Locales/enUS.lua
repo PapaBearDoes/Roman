@@ -28,6 +28,8 @@ L["SubNameSpace"] = {
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
 L["GeneralSettings"] = "General Settings"
 L["GuildRecruitment"] = "Guild Recruitment"
+L["UseGuildFinder"] = "Use Guild Finder"
+L["UseGuildFinderDesc"] = "Shall we use the guild finder advertisement?"
 L["Trade"] = true
 L["LFG"] = "Looking For Group"
 L["Profiles"] = true
@@ -38,6 +40,8 @@ L["ShowMinimapButtonDesc"] = "Show Minimap Button Description"
 L["Version"] = true
 L["RightClick"] = "Right Click"
 L["RightClickToolTip"] = "Right Click Tooltip"
+L["LeftClick"] = "Left Click"
+L["LeftClickToolTip"] = "Left Click Tooltip"
 L["MessageBarkerForWoW"] = "Message Barker for WoW"
 
 L["DoThing"] = "Do The Thing"
