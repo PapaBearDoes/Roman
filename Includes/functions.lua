@@ -21,12 +21,6 @@ function Roman:GetGuildInfo()
   local guildLink = GetClubFinderLink(guildInfo.clubFinderGUID, guildInfo.name)
   local guildComment = guildInfo.comment
   guildComment = string.gsub(guildComment, "%s+", " ")
-  if Roman.db.global.debug == true then
-    Roman:Print("Guild Comment:")
-    Roman:Print(guildComment)
-    Roman:Print("Guild Link:")
-    Roman:Print(guildLink)
-  end
   return guildComment, guildLink
 end
 
@@ -58,87 +52,77 @@ function Roman:MakeGuildRecruitMessage()
 end
 
 function Roman:ZONE_CHANGED_NEW_AREA()
-  Roman:ScheduleTimer("RunAnnouncement", 5)
+  -- Check if instance
+  local inInstance, instanceType = IsInInstance()
+  if inInstance == true then
+    if Roman.db.global.debug == true then
+      Roman:Print("You are in an instance, we're not going to announce.")
+    end
+  else
+    if Roman.db.global.debug == true then
+      Roman:Print("No instance, continuing announcement checks.")
+    end
+    Roman:ScheduleTimer("RunAnnouncement", 10)
+  end
 end
 
 function Roman:RunAnnouncement()
-  --Check if can announce due to time constraints
-  local canAnnounce = Roman:CheckAnnounceTime()
+  local canAnnounceGeneral = Roman:CheckZoneTime()
+  local canAnnounceTrade = Roman:CheckTradeTime()
+  local canAnnounceLFG = Roman:CheckLFGTime()
   if Roman.db.global.debug == true then
-    Roman:Print("Can Announce: " .. (canAnnounce and 'true' or 'false'))
+    Roman:Print("Can Announce General: " .. (canAnnounceGeneral and 'true' or 'false'))
+    Roman:Print("Can Announce Trade: " .. (canAnnounceTrade and 'true' or 'false'))
+    Roman:Print("Can Announce LFG: " .. (canAnnounceLFG and 'true' or 'false'))
   end
-  
-  if canAnnounce == true then
+  if canAnnounceGeneral == true then
+    Roman:PopUp()
+  elseif canAnnounceTrade == true then
+    Roman:PopUp()
+  elseif canAnnounceLFG == true then
     Roman:PopUp()
   end
 end
 
-function Roman:CheckChannel(channel)
-  local chanID, chanName, chanInstanceID, chanIsCommunitiesChannel
-  if channel == "General" then
-    if GetChannelName((GetChannelName("General - " .. GetZoneText()))) > 0 then
-      chanID, chanName, chanInstanceID, chanIsCommunitiesChannel = GetChannelName("General - " .. GetZoneText())
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. chanName)
-        Roman:Print("Channel ID: " .. chanID)
-      end
-      return chanID, chanName
-    end
-  elseif channel == "Trade" then
-    if GetChannelName((GetChannelName("Trade - City"))) > 0 then
-      chanID, chanName, chanInstanceID, chanIsCommunitiesChannel = GetChannelName("Trade - City")
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. chanName)
-        Roman:Print("Channel ID: " .. chanID)
-      end
-      return chanID, chanName
-    end
-  elseif channel == "LFG" then
-    if GetChannelName((GetChannelName("LookingForGroup"))) > 0 then
-      chanID, chanName, chanInstanceID, chanIsCommunitiesChannel = GetChannelName("LookingForGroup")
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. chanName)
-        Roman:Print("Channel ID: " .. chanID)
-      end
-      return chanID, chanName
-    end
-  end
-end
-
-function Roman:CheckAnnounceTime()
+function Roman:CheckZoneTime()
   local zone = GetZoneText()
   local time = GetServerTime()
   local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
-  if Roman.db.global.debug == true then
-    Roman:Print("Zone: " .. zone)
-    Roman:Print("Current Time: " .. time)
-    Roman:Print("LockOut Time: " .. lockTime .. " seconds")
-  end
-  
-  if not Roman.db.profile.messages.guildRecruit.zones[zone]
-  or Roman.db.profile.messages.guildRecruit.zones[zone] == nil
-  or Roman.db.profile.messages.guildRecruit.zones[zone] == "" then
+  if Roman.db.profile.messages.guildRecruit.zones[zone] == nil then
     Roman.db.profile.messages.guildRecruit.zones[zone] = time
   end
-  if Roman.db.global.debug == true then
-    DevTools_Dump(Roman.db.profile.messages.guildRecruit.zones)
-  end
-  
   local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones[zone]
-  if Roman.db.global.debug == true then
-    Roman:Print("Test Time: " .. testTime)
-  end
-  
   if time > testTime then
-    if Roman.db.global.debug == true then
-      Roman:Print("Time is expired ... announcing.")
-    end
     return true
   else
-    if Roman.db.global.debug == true then
-      Roman:Print("Time is not yet expired ... not announcing.")
-      Roman:Print("Can announce next at: " .. date("%H:%M:%S", testTime))
-    end
+    return false
+  end
+end
+
+function Roman:CheckTradeTime()
+  local time = GetServerTime()
+  local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
+  if Roman.db.profile.messages.guildRecruit.zones["Trade"] == nil then
+    Roman.db.profile.messages.guildRecruit.zones["Trade"] = time
+  end
+  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones["Trade"]
+  if time > testTime then
+    return true
+  else
+    return false
+  end
+end
+
+function Roman:CheckLFGTime()
+  local time = GetServerTime()
+  local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
+  if Roman.db.profile.messages.guildRecruit.zones["LFG"] == nil then
+    Roman.db.profile.messages.guildRecruit.zones["LFG"] = time
+  end
+  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones["LFG"]
+  if time > testTime then
+    return true
+  else
     return false
   end
 end
