@@ -19,124 +19,161 @@ local L = Roman:GetLocale()
 local RomanDialog = LibStub("LibDialog-1.0")
 local RomanCTL = ChatThrottleLib
 
-function Roman:MakeButtons()
-  if Roman.db.profile.messages.guildRecruit.channels.General == true then
-    --Get Channel ID by Name
-    local genChanID, genChanName = GetChannelName((GetChannelName("General - " .. GetZoneText())))
-    
-    if genChanName ~= nil then
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. genChanName)
-        Roman:Print("Channel ID: " .. genChanID)
-      end
-      buttonGeneral = {
-        text = genChanName,
+function Roman:CreateDialogs()
+  RomanDialog:Register("GuildRecruitAnnounce", {
+    text = "",
+    width = 600,
+    buttons = {
+      {
+        text = "Announce!",
         on_click = function(self, button, down)
           local msg = Roman:MakeGuildRecruitMessage()
-
-          --Do announce
           local msgLen = string.len(msg[1]) + string.len(msg[2])
           if Roman.db.global.debug == true then
             Roman:Print("Message Length: " .. msgLen)
           end
-          if msgLen > 254 then
-            RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
-            RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
-          else
-            RomanCTL:SendChatMessage("NORMAL", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+
+          if Roman.db.profile.messages.guildRecruit.channels.General == true then
+            if Roman:CheckZoneTime() == true then
+              local zone = GetZoneText()
+              genChanID, genChanName = GetChannelName((GetChannelName("General - " .. zone)))
+              if genChanName ~= nil then
+                if msgLen > 254 then
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                else
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                end
+                Roman.db.profile.messages.guildRecruit.zones[zone] = GetServerTime()
+                local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
+                Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+                Roman:ScheduleTimer("RunAnnouncement", nextRun)
+              end
+            end
           end
-
-          --Add the new lockout Time
-          --Roman.db.profile.messages.guildRecruit.zones[zone] = GetServerTime()
+          if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
+            if Roman:CheckTradeTime() == true then
+              tradeChanID, tradeChanName = GetChannelName((GetChannelName("Trade - City")))
+              if tradeChanName ~= nil then
+                if msgLen > 254 then
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                else
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                end
+                Roman.db.profile.messages.guildRecruit.zones["Trade"] = GetServerTime()
+                local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
+                Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+                Roman:ScheduleTimer("RunAnnouncement", nextRun)
+              end
+            end
+          end
+          if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
+            if Roman:CheckLFGTime() == true then
+              lfgChanID, lfgChanName = GetChannelName((GetChannelName("LookingForGroup")))
+              if lfgChanName ~= nil then
+                if msgLen > 254 then
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                else
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                end
+                Roman.db.profile.messages.guildRecruit.zones["LFG"] = GetServerTime()
+                local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
+                Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+                Roman:ScheduleTimer("RunAnnouncement", nextRun)
+              end
+            end
+          end
         end
-      }
-    else
-      buttonGeneral = nil
-    end
-  else
-    buttonGeneral = nil
-  end
-  if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
-    --Get Channel ID by Name
-    local tradeChanID, tradeChanName = GetChannelName((GetChannelName("Trade - City")))
-    
-    if tradeChanName ~= nil then
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. tradeChanName)
-        Roman:Print("Channel ID: " .. tradeChanID)
-      end
-      buttonTrade = {
-        text = tradeChanName,
+      },
+      {
+        text = "Cancel",
         on_click = function(self, button, down)
         end
-      }
-    else
-      buttonTrade = nil
-    end
-  else
-    buttonTrade = nil
-  end
-  if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
-    --Get Channel ID by Name
-    local lfgChanID, lfgChanName = GetChannelName((GetChannelName("LookingForGroup")))
-    
-    if lfgChanName ~= nil then
-      if Roman.db.global.debug == true then
-        Roman:Print("Channel Name: " .. lfgChanName)
-        Roman:Print("Channel ID: " .. lfgChanID)
-      end
-      buttonLFG = {
-        text = lfgChanName,
-        on_click = function(self, button, down)
-        end
-      }
-    else
-      buttonLFG = nil
-    end
-  else
-    buttonLFG = nil
-  end
-  
-  local button = {
-    buttonGeneral,
-    buttonTrade,
-    buttonLFG,
-  }
-  
-  Roman:Print("Step 1:")
-  DevTools_Dump(button)
-
-  return buttonGeneral, buttonTrade, buttonLFG
-end
-
-function Roman:CreateDialogs()
-end
-
-function Roman:PopUp()
-  --Do LibDialog PopUp Button here
-  local buttonGeneral, buttonTrade, buttonLFG = Roman:MakeButtons()
-  local buttonTable = {
-    text = "Guild recruitment announcement can now be sent to this zone.\n\nClick the channels you wish to announce to:",
-    buttons = {},
+      },
+    },
     hide_on_escape = true,
     show_while_dead = false,
     on_show = function(self, data)
-      self.buttons = {
-        buttonGeneral,
-        buttonTrade,
-        buttonLFG,
-      }
+      Roman:Print("Roman On Show")
+      local genChanName, tradeChanName, lfgChanName
+      if Roman.db.profile.messages.guildRecruit.channels.General == true then
+        if Roman:CheckZoneTime() == true then
+          genChanID, genChanName = GetChannelName((GetChannelName("General - " .. GetZoneText())))
+          if genChanName ~= nil then
+            genChanName = Roman:Colorize(genChanName, "rare") .. "\n"
+          else
+            genChanName = ""
+          end
+        else
+          genChanName = ""
+        end
+      else
+        genChanName = ""
+      end
+      if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
+        if Roman:CheckTradeTime() == true then
+          tradeChanID, tradeChanName = GetChannelName((GetChannelName("Trade - City")))
+          if tradeChanName ~= nil then
+            tradeChanName = Roman:Colorize(tradeChanName, "rare") .. "\n"
+          else
+            tradeChanName = ""
+          end
+        else
+          tradeChanName = ""
+        end
+      else
+        tradeChanName = ""
+      end
+      if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
+        if Roman:CheckLFGTime() == true then
+          lfgChanID, lfgChanName = GetChannelName((GetChannelName("LookingForGroup")))
+          if lfgChanName ~= nil then
+            lfgChanName = Roman:Colorize(lfgChanName, "rare") .. "\n"
+          else
+            lfgChanName = ""
+          end
+        else
+          lfgChanName = ""
+        end
+      else
+        lfgChanName = ""
+      end
+      if Roman.db.global.debug == true then
+        Roman:Print("genChanName: " .. genChanName)
+        Roman:Print("tradeChanName: " .. tradeChanName)
+        Roman:Print("lfgChanName: " .. lfgChanName)
+      end
+      
+      local text = "Guild recruitment announcement can now be sent.\n\n" 
+       .. "We will be announcing in the following channels:\n\n"
+       .. "%s"
+       .. "%s"
+       .. "%s"
+--       .. "\n(Clicking 'Cancel' will reset the timer for this zone.)"
+       if Roman.db.global.debug == true then
+         Roman:Print("PopUp Text: " .. text)
+       end
+      
+      self.text:SetFormattedText(text, genChanName, tradeChanName, lfgChanName)
     end,
-    on_hide = function(self, data)
-      buttonGeneral = nil,
-      buttonTrade = nil,
-      buttonLFG = nil,
+    on_hide = function(self)
+      Roman:Print("Roman On Hide")
+      --Add the new lockout Time
+--[[      local zone = GetZoneText()
+      Roman.db.profile.messages.guildRecruit.zones[zone] = GetServerTime()
+      Roman.db.profile.messages.guildRecruit.zones["Trade"] = GetServerTime()
+      Roman.db.profile.messages.guildRecruit.zones["LFG"] = GetServerTime()]]
+      local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
+      Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+      Roman:ScheduleTimer("RunAnnouncement", nextRun)
     end,
-  }
-  Roman:Print("Step 2:")
-  DevTools_Dump(buttonTable)
-  RomanDialog:Spawn(buttonTable)
-  --OnClick, fire the announcement(s), then close the window
+  })
+end
+
+function Roman:PopUp()
+  RomanDialog:Spawn("GuildRecruitAnnounce")
 end
 --[[
      ########################################################################
