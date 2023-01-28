@@ -53,7 +53,7 @@ end
 
 function Roman:ZONE_CHANGED_NEW_AREA()
   -- Check if instance
-  local inInstance, instanceType = IsInInstance()
+  local inInstance, _ = IsInInstance()
   if inInstance == true then
     if Roman.db.global.debug == true then
       Roman:Print("You are in an instance, we're not going to announce.")
@@ -62,8 +62,29 @@ function Roman:ZONE_CHANGED_NEW_AREA()
     if Roman.db.global.debug == true then
       Roman:Print("No instance, continuing announcement checks.")
     end
-    Roman:ScheduleTimer("RunAnnouncement", 10)
+    local checkTimer = Roman:TimeLeft(Roman.pauseBreathe)
+    if checkTimer ~= nil and checkTimer > 0 then
+      if Roman.db.global.debug == true then
+        Roman:Print("Paused ... cancelling ...")
+      end
+      Roman:CancelTimer(Roman.pauseBreathe)
+    else
+      if Roman.db.global.debug == true then
+        Roman:Print("Not Paused ...")
+      end
+    end
+    if Roman.db.global.debug == true then
+      Roman:Print("Continuing ...")
+    end
+    Roman.pauseBreathe = Roman:ScheduleTimer("PauseBreathe", 20)
   end
+end
+
+function Roman:PauseBreathe()
+  if Roman.db.global.debug == true then
+    Roman:Print("Pausing ... taking a breath ...")
+  end
+  Roman:ScheduleTimer("RunAnnouncement", random(5))
 end
 
 function Roman:RunAnnouncement()
@@ -75,12 +96,31 @@ function Roman:RunAnnouncement()
     Roman:Print("Can Announce Trade: " .. (canAnnounceTrade and 'true' or 'false'))
     Roman:Print("Can Announce LFG: " .. (canAnnounceLFG and 'true' or 'false'))
   end
-  if canAnnounceGeneral == true then
+  
+  if canAnnounceLFG == true then
     Roman:PopUp()
-  elseif canAnnounceTrade == true then
+  else
+    if Roman.db.global.debug == true then
+      Roman:Print("Next LFG Announce at approximately " .. date("%H:%M:%S", ((10 + (60 * Roman.db.profile.messages.guildRecruit.time)) + GetServerTime())))
+    end
+  end
+
+  if canAnnounceTrade == true and GetChannelName((GetChannelName("Trade - City"))) > 0 then
     Roman:PopUp()
-  elseif canAnnounceLFG == true then
+  else
+    if GetChannelName((GetChannelName("Trade - City"))) > 0 then
+      if Roman.db.global.debug == true then
+        Roman:Print("Next Trade Announce at approximately " .. date("%H:%M:%S", ((10 + (60 * Roman.db.profile.messages.guildRecruit.time)) + GetServerTime())))
+      end
+    end
+  end
+  
+  if canAnnounceGeneral == true and GetChannelName((GetChannelName("Trade - City"))) < 1 then
     Roman:PopUp()
+  else
+    if Roman.db.global.debug == true then
+      Roman:Print("Next General Announce at approximately " .. date("%H:%M:%S", ((10 + (60 * Roman.db.profile.messages.guildRecruit.time)) + GetServerTime())))
+    end
   end
 end
 
@@ -128,8 +168,9 @@ function Roman:CheckLFGTime()
 end
 
 function Roman:Init()
-  Roman:CreateDialogs()
   Roman:MiniMapIcon()
+  Roman:ScheduleTimer("CreateDialogs", 1)
+  Roman:ScheduleTimer("ZONE_CHANGED_NEW_AREA", 5)
 end
 
 function Roman:UpdateOptions()
