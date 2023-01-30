@@ -1,5 +1,5 @@
 ***Roman***
-# Message Barker for WoW
+# Guild Recruitment Barker for WoW
 This was built specifically to bark our guild recruitment message.
 
 ## Retired Service Dog who still alerts
@@ -7,12 +7,29 @@ Roman is a Belgian Malinois / Husky service dog who washed due to being attacked
 
 Thusly, since this addon is essentially a message barker, it has been named Roman in honor of him.
 
-Currently this only does guild recruitment barks.
+This only does guild recruitment barks.
 
 ### Options
-This addon will share it's location and last time a bark was sent in the zone it is in so that if multiple people in the same guild are running the addon, it does not bark over another person's bark. It will also share it's settings with each other with whomever has the highest guild rank being the "Handler" for the rest of the pack.
+ToDo:
+This addon will eventually share it's location and last time a bark was sent in the zone it is in so that if multiple people in the same guild are running the addon, it does not bark over another person's bark. It will also eventually share it's settings with each other, with whomever has the highest guild rank being the "Handler" for the rest of the pack.
 
 #### Misc
+Ground Rules:
+* I will not code the announcements for any faster than every 15 minutes.
+ * If you modify the code to go faster and get reported / banned, that's on you.
+* When on flight paths, you may notice on occasion it does not fire within a zone.
+  * This is by design to prevent message flooding, and to ensure that the multiple zone changes in some flight path locations don't hang your game and cause lock ups.
+
+Assumptions made:
+* General chat is the default channel to recruit in.
+* Trade Chat supersedes General Chat, and therefore it is an either / or situation.
+  * If you have trade turned on, when you are in a place where trade chat is available, we will not bark into General.
+  * The inverse is true as well, if you have Trade turned off, we will bark in General.
+* You already have a recruitment message built into the game via the guild recruitment panel in-game, this simply takes that message, adds your unique link to it and barks it out so that more people see it.
+
+Things open for discussion:
+* Any incorrect assumptions made on my part.
+* Almost anything else other than the minimum time frame of 15 minutes.
 
 ##### About PapaBearDoes
 I run a *501(c)(3)* dog rescue out of my house, so any and all donations to me are tax deductible. The rescue name is **K9 Trust**.
