@@ -84,52 +84,52 @@ function Roman:PauseBreathe()
   if Roman.db.global.debug == true then
     Roman:Print("Pausing ... taking a breath ...")
   end
-  Roman:ScheduleTimer("RunAnnouncement", random(5))
+  Roman:ScheduleTimer("Bark", random(5))
 end
 
-function Roman:RunAnnouncement()
-  local canAnnounceGeneral = Roman:CheckZoneTime()
-  local canAnnounceTrade = Roman:CheckTradeTime()
-  local canAnnounceLFG = Roman:CheckLFGTime()
+function Roman:Bark()
+  local canBarkGeneral = Roman:CheckZoneTime()
+  local canBarkTrade = Roman:CheckTradeTime()
+  local canBarkLFG = Roman:CheckLFGTime()
   if Roman.db.global.debug == true then
-    Roman:Print("Can Announce General: " .. (canAnnounceGeneral and 'true' or 'false'))
-    Roman:Print("Can Announce Trade: " .. (canAnnounceTrade and 'true' or 'false'))
-    Roman:Print("Can Announce LFG: " .. (canAnnounceLFG and 'true' or 'false'))
+    Roman:Print("Can Bark General: " .. (canBarkGeneral and 'true' or 'false'))
+    Roman:Print("Can Bark Trade: " .. (canBarkTrade and 'true' or 'false'))
+    Roman:Print("Can Bark LFG: " .. (canBarkLFG and 'true' or 'false'))
   end
   
-  if canAnnounceLFG == true then
+  if canBarkLFG == true then
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next LFG Announce at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next LFG Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
 
-  if canAnnounceTrade == true and GetChannelName((GetChannelName("Trade - City"))) > 0 then
+  if canBarkTrade == true and GetChannelName((GetChannelName("Trade - City"))) > 0 then
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next Trade Announce at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next Trade Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
   
-  if canAnnounceGeneral == true and canAnnounceTrade == false then
+  if canBarkGeneral == true and canBarkTrade == false then
     Roman:PopUp()
-  elseif canAnnounceGeneral == true and GetChannelName((GetChannelName("Trade - City"))) < 1 then
+  elseif canBarkGeneral == true and GetChannelName((GetChannelName("Trade - City"))) < 1 then
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
       local genZone = GetZoneText()
-      Roman:Print("Next General Announce at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next General Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
 end
 
 function Roman:CheckTimes()
   local genZone = GetZoneText()
-  Roman:Print("Next General Announce possible at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print("Next Trade Announce possible at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print("Next LFG Announce possible at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["General"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["Trade"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["LFG"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
 end
 
 function Roman:CheckZoneTime()

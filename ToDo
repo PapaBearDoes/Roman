@@ -1,1 +1,7 @@
 *** Roman ***
+This addon will eventually share it's location and last time a bark was sent in
+the zone it is in so that if multiple people in the same guild are running the
+addon, it does not bark over another person's bark.
+
+It will also eventually share it's settings with each other, with whomever has
+the highest guild rank being the "Handler" for the rest of the pack.

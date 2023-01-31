@@ -20,12 +20,11 @@ local RomanDialog = LibStub("LibDialog-1.0")
 local RomanCTL = ChatThrottleLib
 
 function Roman:CreateDialogs()
-  RomanDialog:Register("GuildRecruitAnnounce", {
+  RomanDialog:Register("GuildRecruitBark", {
     text = "",
---    width = 600,
     buttons = {
       {
-        text = "Announce!",
+        text = "Bark!",
         on_click = function(self, button, down)
           local msg = Roman:MakeGuildRecruitMessage()
           local msgLen = string.len(msg[1]) + string.len(msg[2])
@@ -40,12 +39,9 @@ function Roman:CreateDialogs()
                 genChanID, genChanName = GetChannelName((GetChannelName("General - " .. genZone)))
                 if genChanName ~= nil then
                   if msgLen > 254 then
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, genChanID) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, genChanID) --chanID)
                   else
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, genChanID) --chanID)
                   end
 
@@ -61,12 +57,9 @@ function Roman:CreateDialogs()
               if tradeChanName ~= nil then
                 if GetChannelName((GetChannelName("Trade - City"))) > 0 then
                   if msgLen > 254 then
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, tradeChanID) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, tradeChanID) --chanID)
                   else
---                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
                     RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, tradeChanID) --chanID)
                   end
                 end
@@ -81,12 +74,9 @@ function Roman:CreateDialogs()
               lfgChanID, lfgChanName = GetChannelName((GetChannelName("LookingForGroup")))
               if lfgChanName ~= nil then
                 if msgLen > 254 then
---                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
---                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
                   RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, lfgChanID) --chanID)
                   RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, lfgChanID) --chanID)
                 else
---                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
                   RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, lfgChanID) --chanID)
                 end
 
@@ -105,7 +95,7 @@ function Roman:CreateDialogs()
     hide_on_escape = true,
     show_while_dead = false,
     on_show = function(self, data)
-      Roman:Print("Roman On Show")
+      Roman:Print("Roman On_Show")
       local genChanName, tradeChanName, lfgChanName
 
       if Roman.db.profile.messages.guildRecruit.channels.General == true then
@@ -168,8 +158,8 @@ function Roman:CreateDialogs()
         Roman:Print("lfgChanName: " .. lfgChanName)
       end
       
-      local text = "Guild recruitment announcement can now be sent.\n\n" 
-       .. "We will be announcing in the following channels:\n\n"
+      local text = L["BarkCanBeSent"] .. ".\n\n"
+       .. L["WeWillBarkInChannels"] .. ":\n\n"
        .. "%s"
        .. "%s"
        .. "%s"
@@ -195,13 +185,13 @@ function Roman:CreateDialogs()
           Roman:Print("Timer Not Active, moving on ...")
         end
       end
-      Roman.announceTimer = Roman:ScheduleTimer("RunAnnouncement", nextRun)
+      Roman.announceTimer = Roman:ScheduleTimer("Bark", nextRun)
     end,
   })
 end
 
 function Roman:PopUp()
-  RomanDialog:Spawn("GuildRecruitAnnounce")
+  RomanDialog:Spawn("GuildRecruitBark")
 end
 --[[
      ########################################################################

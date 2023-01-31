@@ -35,8 +35,8 @@ Roman.options = {
         tradeChan = {
           order = 2,
           type = "toggle",
-          name = "Trade Channel",
-          desc = "Shall we bark in the trade channel instead of General when available?",
+          name = L["Trade"] .. " " .. L["Channel"],
+          desc = L["TradeChanDesc"],
           get = function()
             return Roman.db.profile.messages.guildRecruit.channels.Trade
           end,
@@ -50,8 +50,8 @@ Roman.options = {
         LFGChan = {
           order = 3,
           type = "toggle",
-          name = "Looking For Group",
-          desc = "Shall we bark in the Looking For Group channel? (You must be joined: '/join LookingForGroup')",
+          name = L["Looking For Group"] .. " " .. L["Channel"],
+          desc = L["LFGChanDesc"],
           get = function()
             return Roman.db.profile.messages.guildRecruit.channels.LookingForGroup
           end,
@@ -93,8 +93,8 @@ Roman.options = {
         lockoutTime = {
           order = 6,
           type = "range",
-          name = "Lock Out Time (Minutes)",
-          desc = "How long in between barks for each location?",
+          name = L["LockOutTimer"],
+          desc = L["LockOutTimerDesc"],
           width = "full",
           min = 15,
           max = 120,

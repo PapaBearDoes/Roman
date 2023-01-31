@@ -26,24 +26,30 @@ L["SubNameSpace"] = {
 --   ## Do All The Things!!!
 -- enUS Localization
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
+L["BarkCanBeSent"] = "Guild recruitment bark can now be sent"
+L["BarkPossibleAtApproximately"] = "bark possible at approximately"
+L["Channel"] = true
+L["Default"] = true
+L["General"] = true
 L["GeneralSettings"] = "General Settings"
 L["GuildRecruitment"] = "Guild Recruitment"
-L["Trade"] = true
-L["LFG"] = "Looking For Group"
-L["Profiles"] = true
-L["Options"] = true
-L["Default"] = true
-L["ShowMinimapButton"] = "Show Minimap Button"
-L["ShowMinimapButtonDesc"] = "Show Minimap Button Description"
-L["Version"] = true
-L["RightClick"] = "Right Click"
-L["RightClickToolTip"] = "Right Click Tooltip"
 L["LeftClick"] = "Left Click"
 L["LeftClickToolTip"] = "Left Click Tooltip"
-L["MessageBarkerForWoW"] = "Message Barker for WoW"
-
-L["DoThing"] = "Do The Thing"
-L["DoThingDesc"] = "Do The Thing Description"
+L["LFG"] = "Looking For Group"
+L["LFGChanDesc"] = "Shall we bark in the Looking For Group channel? (You must be joined: '/join LookingForGroup')"
+L["LockOutTimer"] = "Lock Out Time (Minutes)"
+L["LockOutTimerDesc"] = "How long in between barks for each location?"
+L["Next"] = true
+L["Options"] = true
+L["Profiles"] = true
+L["RightClick"] = "Right Click"
+L["RightClickToolTip"] = "Right Click Tooltip"
+L["ShowMinimapButton"] = "Show Minimap Button"
+L["ShowMinimapButtonDesc"] = "Show Minimap Button Description"
+L["Trade"] = true
+L["TradeChanDesc"] = "Shall we bark in the trade channel instead of General when available?"
+L["Version"] = true
+L["WeWillBarkInChannels"] = "We will be barking in the following channels"
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

@@ -34,12 +34,12 @@ RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
       return
     end
     tooltip:AddLine(myName .. " " .. GetAddOnMetadata(myName, L["Version"]))
-    tooltip:AddLine("Next " .. Roman:Colorize("General", "uncommon") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(L["General"], "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
-      tooltip:AddLine("Next " .. Roman:Colorize("Trade", "epic") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(L["Trade"], "epic") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
     if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
-      tooltip:AddLine("Next " .. Roman:Colorize("LFG", "rare") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(L["LFG"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
     tooltip:AddLine(" ")
     tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])
