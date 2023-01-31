@@ -21,92 +21,8 @@ Roman.options = {
   type = "group",
   name = myName,
   args = {
-    recruit = {
-      order = 1,
-      type = "group",
-      name = L["GuildRecruitment"],
-      cmdInline = true,
-      args = {
-        separator1 = {
-          order = 1,
-          type = "header",
-          name = L["GuildRecruitment"],
-        },
-        useGuildFinder = {
-          order = 2,
-          type = "toggle",
-          name = L["UseGuildFinder"],
-          desc = L["UseGuildFinderDesc"],
-          get = function()
-            return Roman.db.profile.messages.guildRecruit.useGuildFinder
-          end,
-          set = function(key, value)
-            Roman.db.profile.messages.guildRecruit.useGuildFinder = value
-            if not Roman.db.profile.messages.guildRecruit.useGuildFinder then
-              Roman.db.profile.messages.guildRecruit.useGuildFinder = value
-            end
-          end,
-        },
-      },
-    },
---[[    trade = {
-      order = 2,
-      type = "group",
-      name = L["Trade"],
-      cmdInline = true,
-      args = {
-        separator1 = {
-          order = 1,
-          type = "header",
-          name = L["Trade"],
-        },
-        doThing = {
-          order = 2,
-          type = "toggle",
-          name = L["DoThing"],
-          desc = L["DoThingDesc"],
-          get = function()
-            return Roman.db.profile.doThing
-          end,
-          set = function(key, value)
-            Roman.db.profile.doThing = value
-            if not Roman.db.profile.doThjing then
-              Roman.db.profile.doThing = value
-            end
-          end,
-        },
-      },
-    },
-    LFG = {
-      order = 3,
-      type = "group",
-      name = L["LFG"],
-      cmdInline = true,
-      args = {
-        separator1 = {
-          order = 1,
-          type = "header",
-          name = L["LFG"],
-        },
-        doThing = {
-          order = 2,
-          type = "toggle",
-          name = L["DoThing"],
-          desc = L["DoThingDesc"],
-          get = function()
-            return Roman.db.profile.doThing
-          end,
-          set = function(key, value)
-            Roman.db.profile.doThing = value
-            if not Roman.db.profile.doThjing then
-              Roman.db.profile.doThing = value
-            end
-          end,
-        },
-      },
-    },]]
     settings = {
-      order = 4,
+      order = 1,
       type = "group",
       name = L["GeneralSettings"],
       cmdInline = true,
@@ -116,23 +32,38 @@ Roman.options = {
           type = "header",
           name = L["Options"],
         },
-        --[[doThing = {
+        tradeChan = {
           order = 2,
           type = "toggle",
-          name = L["DoThing"],
-          desc = L["DoThingDesc"],
+          name = "Trade Channel",
+          desc = "Shall we bark in the trade channel instead of General when available?",
           get = function()
-            return Roman.db.profile.doThing
+            return Roman.db.profile.messages.guildRecruit.channels.Trade
           end,
           set = function(key, value)
-            Roman.db.profile.doThing = value
-            if not Roman.db.profile.doThjing then
-              Roman.db.profile.doThing = value
+            Roman.db.profile.messages.guildRecruit.channels.Trade = value
+            if not Roman.db.profile.messages.guildRecruit.channels.Trade then
+              Roman.db.profile.messages.guildRecruit.channels.Trade = value
             end
           end,
-        },]]
+        },
+        LFGChan = {
+          order = 3,
+          type = "toggle",
+          name = "Looking For Group",
+          desc = "Shall we bark in the Looking For Group channel? (You must be joined: '/join LookingForGroup')",
+          get = function()
+            return Roman.db.profile.messages.guildRecruit.channels.LookingForGroup
+          end,
+          set = function(key, value)
+            Roman.db.profile.messages.guildRecruit.channels.LookingForGroup = value
+            if not Roman.db.profile.messages.guildRecruit.channels.LookingForGroup then
+              Roman.db.profile.messages.guildRecruit.channels.LookingForGroup = value
+            end
+          end,
+        },
         showMinimapButton = {
-          order = 5,
+          order = 4,
           type = "toggle",
           name = L["ShowMinimapButton"],
           desc = L["ShowMinimapButtonDesc"],
@@ -153,6 +84,30 @@ Roman.options = {
               RomanIcon:Hide(myName .. "_mapIcon")
             end
           end
+        },
+        separator2 = {
+          order = 5,
+          type = "header",
+          name = "",
+        },
+        lockoutTime = {
+          order = 6,
+          type = "range",
+          name = "Lock Out Time (Minutes)",
+          desc = "How long in between barks for each location?",
+          width = "full",
+          min = 15,
+          max = 120,
+          step = 5,
+          get = function()
+            return Roman.db.profile.messages.guildRecruit.time
+          end,
+          set = function(key, value)
+            Roman.db.profile.messages.guildRecruit.time = value
+            if not Roman.db.profile.messages.guildRecruit.time then
+              Roman.db.profile.messages.guildRecruit.time = value
+            end
+          end,
         },
       },
     },

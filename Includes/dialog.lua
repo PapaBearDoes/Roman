@@ -34,17 +34,21 @@ function Roman:CreateDialogs()
           end
 
           if Roman.db.profile.messages.guildRecruit.channels.General == true then
-            if GetChannelName((GetChannelName("Trade - City"))) < 1 then
+            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName((GetChannelName("Trade - City"))) < 1 then
               if Roman:CheckZoneTime() == true then
                 local genZone = GetZoneText()
                 genChanID, genChanName = GetChannelName((GetChannelName("General - " .. genZone)))
                 if genChanName ~= nil then
                   if msgLen > 254 then
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, genChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, genChanID) --chanID)
                   else
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, genChanID) --chanID)
                   end
+
                   Roman.db.profile.messages.guildRecruit.zones[genZone] = GetServerTime()
                 end
               end
@@ -55,14 +59,18 @@ function Roman:CreateDialogs()
             if Roman:CheckTradeTime() == true then
               tradeChanID, tradeChanName = GetChannelName((GetChannelName("Trade - City")))
               if tradeChanName ~= nil then
-                if msgLen > 254 then
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
-                else
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                if GetChannelName((GetChannelName("Trade - City"))) > 0 then
+                  if msgLen > 254 then
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, tradeChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, tradeChanID) --chanID)
+                  else
+--                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, tradeChanID) --chanID)
+                  end
                 end
-                local genZone = GetZoneText()
-                Roman.db.profile.messages.guildRecruit.zones[genZone] = GetServerTime()
+
                 Roman.db.profile.messages.guildRecruit.zones["Trade"] = GetServerTime()
               end
             end
@@ -73,11 +81,15 @@ function Roman:CreateDialogs()
               lfgChanID, lfgChanName = GetChannelName((GetChannelName("LookingForGroup")))
               if lfgChanName ~= nil then
                 if msgLen > 254 then
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+--                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, 6) --chanID)
+--                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, 6) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, lfgChanID) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, lfgChanID) --chanID)
                 else
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+--                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, 6) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, lfgChanID) --chanID)
                 end
+
                 Roman.db.profile.messages.guildRecruit.zones["LFG"] = GetServerTime()
               end
             end
@@ -101,7 +113,7 @@ function Roman:CreateDialogs()
           local genZone = GetZoneText()
           genChanID, genChanName = GetChannelName((GetChannelName("General - " .. genZone)))
           if genChanName ~= nil then
-            if GetChannelName((GetChannelName("Trade - City"))) < 1 then
+            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName((GetChannelName("Trade - City"))) < 1 then
               genChanName = Roman:Colorize(genChanName, "rare") .. "\n"
             else
               genChanName = ""
@@ -120,7 +132,11 @@ function Roman:CreateDialogs()
         if Roman:CheckTradeTime() == true then
           tradeChanID, tradeChanName = GetChannelName((GetChannelName("Trade - City")))
           if tradeChanName ~= nil then
-            tradeChanName = Roman:Colorize(tradeChanName, "rare") .. "\n"
+            if GetChannelName((GetChannelName("Trade - City"))) > 0 then
+              tradeChanName = Roman:Colorize(tradeChanName, "rare") .. "\n"
+            else
+              tradeChanName = ""
+            end
           else
             tradeChanName = ""
           end

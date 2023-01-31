@@ -34,11 +34,9 @@ function Roman:OnInitialize()
   LibStub("AceConfig-3.0"):RegisterOptionsTable(myName, Roman.options, nil)
 
   Roman:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-  Roman:RegisterChatCommand("roman", "ShowUI")
+  Roman:RegisterChatCommand("roman", "ShowConfig")
   
   Roman:Init()
-  
-  Roman:Main()
   
   Roman:Print("Addon Loaded")
   if Roman.db.profile.debug == true then
@@ -50,14 +48,16 @@ function Roman:OnEnable()
   local RomanOptionsDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
   RomanOptionFrames.settings = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, "settings")
-  RomanOptionFrames.recruit = RomanOptionsDialog:AddToBlizOptions(myName, L["GuildRecruitment"], myName, "recruit")
---  RomanOptionFrames.trade = RomanOptionsDialog:AddToBlizOptions(myName, L["Trade"], myName, "trade")
---  RomanOptionFrames.LFG = RomanOptionsDialog:AddToBlizOptions(myName, L["LFG"], myName, "LFG")
   RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, "profile")
 end
 
-function Roman:ShowConfig()
-  InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
+function Roman:ShowConfig(args)
+  local arg = Roman:GetArgs(args)
+  if arg == "time" then
+    Roman:CheckTimes()
+  else
+    InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
+  end
 end
 --[[
      ########################################################################

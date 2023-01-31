@@ -3,7 +3,7 @@
 #Meta
 ## Title: Roman
 ## Author: PapaBearDoes
-## Notes: 
+## Notes: Guild Recruitment Barker for WoW
 ## Notes-deDE: 
 ## Notes-enUS: 
 ## Notes-esES: 
@@ -17,11 +17,11 @@
 ## Version: @project-version@
 
 # X-Meta
-## X-Category: 
+## X-Category: Guild, Chat & Communication
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask about anything else.
-## X-Website: 
+## X-Website: https://github.com/PapaBearDoes/Roman
 ## X-Discord: https://discord.alphabetcartel.org
-## X-Curse-Project-ID: 
+## X-Curse-Project-ID: 820028
 
 # Functionality
 ## SavedVariables: RomanSV

@@ -52,18 +52,15 @@ Roman.dbDefaults = {
     },
   },
   profile = {
-    doThing = true,
     messages = {
       guildRecruit = {
-        zones = {},
-        useGuildFinder = true,
+        time = 45,
         channels = {
           General = true,
-          Trade = false,
+          Trade = true,
           LookingForGroup = true,
         },
-        message = "",
-        time = 45,
+        zones = {},
       },
     },
     mmIcon = {

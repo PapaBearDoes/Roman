@@ -28,8 +28,6 @@ L["SubNameSpace"] = {
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
 L["GeneralSettings"] = "General Settings"
 L["GuildRecruitment"] = "Guild Recruitment"
-L["UseGuildFinder"] = "Use Guild Finder"
-L["UseGuildFinderDesc"] = "Shall we use the guild finder advertisement?"
 L["Trade"] = true
 L["LFG"] = "Looking For Group"
 L["Profiles"] = true

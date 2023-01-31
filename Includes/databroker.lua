@@ -21,21 +21,26 @@ Roman_LDB = LibStub("LibDataBroker-1.1")
 RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
   type = "data source",
   label = myName,
-  text = "",
+  text = myName,
   icon = "Interface\\Icons\\Inv_aussiepup_bcollie",
   OnClick = function(frame, click)
     if click == "RightButton" then
-      Roman:ShowConfig()
-    elseif click == "LeftButton" then
-      Roman:ShowUI()
+      Roman:ShowConfig("")
     end
   end,
   OnTooltipShow = function(tooltip)
+    local genZone = GetZoneText()
     if not tooltip or not tooltip.AddLine then
       return
     end
     tooltip:AddLine(myName .. " " .. GetAddOnMetadata(myName, L["Version"]))
-    tooltip:AddLine(Roman:Colorize(L["LeftClick"] .. " ", "eda55f") .. L["LeftClickToolTip"])
+    tooltip:AddLine("Next " .. Roman:Colorize("General", "uncommon") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
+      tooltip:AddLine("Next " .. Roman:Colorize("Trade", "epic") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    end
+    if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
+      tooltip:AddLine("Next " .. Roman:Colorize("LFG", "rare") .. " bark possible at approximately: " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    end
     tooltip:AddLine(" ")
     tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])
   end,

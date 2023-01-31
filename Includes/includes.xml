@@ -12,10 +12,8 @@
   <Script file="defaults.lua"/>
   <Script file="options.lua"/>
   <Script file="databroker.lua"/>
-  <Script file="frame.lua"/>
   <Script file="functions.lua"/>
   <Script file="dialog.lua"/>
-  <Script file="main.lua"/>
 </Ui>
 <!--
 ########################################################################
