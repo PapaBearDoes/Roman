@@ -26,6 +26,8 @@ RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
   OnClick = function(frame, click)
     if click == "RightButton" then
       Roman:ShowConfig("")
+    elseif click == "LeftButton" then
+      Roman:CheckTimes()
     end
   end,
   OnTooltipShow = function(tooltip)

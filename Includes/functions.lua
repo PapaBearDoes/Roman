@@ -127,9 +127,9 @@ end
 
 function Roman:CheckTimes()
   local genZone = GetZoneText()
-  Roman:Print(L["Next"] .. " " .. L["General"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. L["Trade"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. L["LFG"] .. " " .. L["BarkPossibleAtApproximately"] .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["General"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["Trade"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. L["LFG"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
 end
 
 function Roman:CheckZoneTime()
@@ -185,43 +185,6 @@ function Roman:CheckLFGTime()
   else
     return false
   end
-end
-
-function Roman:Init()
-  Roman:MiniMapIcon()
-  Roman:ScheduleTimer("CreateDialogs", 1)
-  Roman:ScheduleTimer("ZONE_CHANGED_NEW_AREA", 5)
-end
-
-function Roman:UpdateOptions()
-  LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
-end
-
-function Roman:UpdateProfile()
-  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
-end
-
-function Roman:OnProfileChanged(event, database, newProfileKey)
-  Roman.db.profile = database.profile
-end
-
-function Roman:UpdateProfileDelayed()
-  for timerKey, timerValue in Roman:IterateModules() do
-    if timerValue.db.profile.on then
-      if timerValue:IsEnabled() then
-        timerValue:Disable()
-        timerValue:Enable()
-      else
-        timerValue:Enable()
-      end
-    else
-      timerValue:Disable()
-    end
-  end
-  Roman:UpdateOptions()
-end
-
-function Roman:OnProfileReset()
 end
 --[[
      ########################################################################

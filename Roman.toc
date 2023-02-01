@@ -1,19 +1,19 @@
-## Interface: 100005
+## Interface: 100007
 
 #Meta
 ## Title: Roman
 ## Author: PapaBearDoes
-## Notes: Guild Recruitment Barker for WoW
-## Notes-deDE: 
-## Notes-enUS: 
-## Notes-esES: 
-## Notes-esMX: 
-## Notes-frFR: 
-## Notes-itIT: 
-## Notes-koKR: 
-## Notes-ptBR: 
-## Notes-zhCN: 
-## Notes-zhTW: 
+## Notes: Guild Recruitment Barker for World of Warcraft
+## Notes-deDE: Ansager für Gildenrekrutierung für World of Warcraft
+## Notes-enUS: Guild Recruitment Barker for World of Warcraft
+## Notes-esES: Locutor de reclutamiento de gremios para World of Warcraft
+## Notes-esMX: Locutor de reclutamiento de gremios para World of Warcraft
+## Notes-frFR: Annonceur de recrutement de guilde pour World of Warcraft
+## Notes-itIT: Annunciatore di reclutamento della gilda per World of Warcraft
+## Notes-koKR: 월드 오브 워크래프트 길드 모집 아나운서
+## Notes-ptBR: Anunciador de Recrutamento de Guilda para World of Warcraft
+## Notes-zhCN: 魔兽世界公会招募公告
+## Notes-zhTW: 魔獸世界公會招募公告
 ## Version: @project-version@
 
 # X-Meta
