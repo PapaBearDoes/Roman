@@ -16,9 +16,10 @@ This addon will eventually share it's location and last time a bark was sent in 
 #### Misc
 Ground Rules:
 * I will not code the announcements for any faster than every 15 minutes.
- * If you modify the code to go faster and get reported / banned, that's on you.
+  * If you modify the code to go faster and get reported / banned, that's on you.
 * When on flight paths, you may notice on occasion it does not fire within a zone.
   * This is by design to prevent message flooding, and to ensure that the multiple zone changes in some flight path locations don't hang your game and cause lock ups.
+* We do not bark in instances!
 
 Assumptions made:
 * General chat is the default channel to recruit in.

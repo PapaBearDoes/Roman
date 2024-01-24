@@ -16,9 +16,14 @@ local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
+-- Create any required hidden frames
+Roman.frame = CreateFrame("GameTooltip")
+Roman.frame:SetOwner(WorldFrame, "ANCHOR_NONE")
+
 -- Create DB defaults
 Roman.dbDefaults = {
   global = {
+    debug = true,
     message = {
       type = {
         [1] = "GuildRecruitment",
@@ -47,23 +52,20 @@ Roman.dbDefaults = {
     },
   },
   profile = {
-    debug = false,
-    doThing = true,
+    messages = {
+      guildRecruit = {
+        time = 45,
+        channels = {
+          General = true,
+          Trade = true,
+          LookingForGroup = true,
+        },
+        zones = {},
+      },
+    },
     mmIcon = {
       hide = false,
       minimapPos = 205,
-    },
-    messages = {
-      [1] = {
-        type = 1,
-        channels = {
-          1,
-          2,
-          4,
-        },
-        message = "Message",
-        timer = 45,
-      },
     },
   },
 }

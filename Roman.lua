@@ -18,7 +18,7 @@ local initOptions = {
   nohelp = false,
   enhancedProfile = true
 }
-local Roman = LibStub("LibInit"):NewAddon(addon, myName, initOptions, true)
+local Roman = LibStub("LibInit"):NewAddon(addon, myName, initOptions, true, "AceComm-3.0", "AceSerializer-3.0")
 local L = Roman:GetLocale()
 -- End Imports
 --   ######################################################################## ]]
@@ -33,11 +33,10 @@ function Roman:OnInitialize()
   Roman.options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(Roman.db)
   LibStub("AceConfig-3.0"):RegisterOptionsTable(myName, Roman.options, nil)
 
-  Roman:MiniMapIcon()
-
-  Roman:RegisterChatCommand("roman", "ShowUI")
-
-  Roman:Main()
+  Roman:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+  Roman:RegisterChatCommand("roman", "ShowConfig")
+  
+  Roman:Init()
   
   Roman:Print("Addon Loaded")
   if Roman.db.profile.debug == true then
@@ -48,8 +47,54 @@ end
 function Roman:OnEnable()
   local RomanOptionsDialog = LibStub("AceConfigDialog-3.0")
   RomanOptionFrames = {}
-  RomanOptionFrames.general = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, L["general"])
-  RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, L["profile"])
+  RomanOptionFrames.settings = RomanOptionsDialog:AddToBlizOptions(myName, nil, nil, "settings")
+  RomanOptionFrames.profile = RomanOptionsDialog:AddToBlizOptions(myName, L["Profiles"], myName, "profile")
+end
+
+function Roman:ShowConfig(args)
+  local arg = Roman:GetArgs(args)
+  if arg == "time" then
+    Roman:CheckTimes()
+  else
+    InterfaceOptionsFrame_OpenToCategory(RomanOptionFrames.settings)
+  end
+end
+
+function Roman:Init()
+  Roman:MiniMapIcon()
+  Roman:ScheduleTimer("CreateDialogs", 1)
+  Roman:ScheduleTimer("ZONE_CHANGED_NEW_AREA", 5)
+end
+
+function Roman:UpdateOptions()
+  LibStub("AceConfigRegistry-3.0"):NotifyChange(me)
+end
+
+function Roman:UpdateProfile()
+  Roman:ScheduleTimer("UpdateProfileDelayed", 0)
+end
+
+function Roman:OnProfileChanged(event, database, newProfileKey)
+  Roman.db.profile = database.profile
+end
+
+function Roman:UpdateProfileDelayed()
+  for timerKey, timerValue in Roman:IterateModules() do
+    if timerValue.db.profile.on then
+      if timerValue:IsEnabled() then
+        timerValue:Disable()
+        timerValue:Enable()
+      else
+        timerValue:Enable()
+      end
+    else
+      timerValue:Disable()
+    end
+  end
+  Roman:UpdateOptions()
+end
+
+function Roman:OnProfileReset()
 end
 --[[
      ########################################################################
