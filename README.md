@@ -11,7 +11,10 @@ This only does guild recruitment barks.
 
 ### Options
 ToDo:
-This addon will eventually share it's location and last time a bark was sent in the zone it is in so that if multiple people in the same guild are running the addon, it does not bark over another person's bark. It will also eventually share it's settings with each other, with whomever has the highest guild rank being the "Handler" for the rest of the pack.
+* Roman will share his location and last time he barked in the zone he is in so that if multiple people in the same guild are running the addon, he does not bark over another person's bark.
+* Roman will share his settings with other guild members. Whomever has the highest guild rank being the "Handler" for the rest of the pack.
+
+... eventually ...
 
 #### Misc
 Ground Rules:
