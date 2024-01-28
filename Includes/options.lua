@@ -114,6 +114,26 @@ Roman.options = {
             end
           end,
         },
+        separator3 = {
+          order = 7,
+          type = "header",
+          width = "full",
+          name = "Recruitment Message",
+        },
+        recruitmentMessage = {
+          order = 8,
+          type = "description",
+          width = "full",
+          fontSize = "Large",
+          name = function()
+            local guildInfo = ClubFinderGetCurrentClubListingInfo(C_Club.GetGuildClubId())
+            local guildLink = GetClubFinderLink(guildInfo.clubFinderGUID, guildInfo.name)
+            local guildComment = guildInfo.comment
+            guildComment = string.gsub(guildComment, "%s+", " ")
+            msg = guildLink .. " " .. guildComment
+            return msg 
+          end,
+        },
       },
     },
   },
