@@ -23,7 +23,7 @@ Roman.frame:SetOwner(WorldFrame, "ANCHOR_NONE")
 -- Create DB defaults
 Roman.dbDefaults = {
   global = {
-    debug = true,
+    debug = false,
     message = {
       type = {
         [1] = "GuildRecruitment",
