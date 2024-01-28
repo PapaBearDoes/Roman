@@ -61,6 +61,7 @@ Roman.dbDefaults = {
           LookingForGroup = true,
         },
         zones = {},
+        customMessage = "",
       },
     },
     mmIcon = {
