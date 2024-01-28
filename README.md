@@ -18,6 +18,10 @@ ToDo:
 
 #### Misc
 Ground Rules:
+* Barking is a willful action.
+  * It requires direct input from the player, and should never be fully automated.
+  * Thus we require a button click each time a bark is to be sent.
+  * You can cancel any bark without issue.
 * I will not code the announcements for any faster than every 15 minutes.
   * If you modify the code to go faster and get reported / banned, that's on you.
 * When on flight paths, you may notice on occasion it does not fire within a zone.
