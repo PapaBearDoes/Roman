@@ -36,7 +36,7 @@ function Roman:CreateDialogs()
           end
 
           if Roman.db.profile.messages.guildRecruit.channels.General == true then
-            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName(GetChannelName(tradeChanName)) < 1 then
+            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName(GetChannelName(L["TradeChanName"])) < 1 then
               if Roman:CheckZoneTime() == true then
                 if genChanName ~= nil then
                   if msgLen > 254 then
@@ -108,7 +108,7 @@ function Roman:CreateDialogs()
             Roman:Print("General Channel Name (OnShow): " .. genChanName)
           end
           if genChanName ~= nil then
-            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName(GetChannelName(tradeChanName)) < 1 then
+            if Roman.db.profile.messages.guildRecruit.channels.Trade == false or GetChannelName(GetChannelName(L["TradeChanName"])) < 1 then
               genChanName = Roman:Colorize(genChanName, "uncommon") .. "\n"
             else
               genChanName = ""
@@ -123,7 +123,7 @@ function Roman:CreateDialogs()
         genChanName = ""
       end
 
-      if Roman.db.profile.messages.guildRecruit.channels.Trade == true and GetChannelName(GetChannelName(tradeChanName)) > 0 then
+      if Roman.db.profile.messages.guildRecruit.channels.Trade == true and GetChannelName(GetChannelName(L["TradeChanName"])) > 0 then
         if Roman:CheckTradeTime() == true then
           if tradeChanName ~= nil then
             if GetChannelName(GetChannelName(tradeChanName)) > 0 then
