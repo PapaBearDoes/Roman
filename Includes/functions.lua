@@ -26,6 +26,11 @@ end
 
 function Roman:MakeGuildRecruitMessage()
   local guildComment, guildLink = Roman:GetGuildInfo()
+
+  if Roman.db.profile.messages.guildRecruit.useCustomMessage == true and Roman.db.profile.messages.guildRecruit.customMessage ~= nil then
+    guildComment = Roman.db.profile.messages.guildRecruit.customMessage
+  end
+
   guildCommentLength = string.len(guildComment)
   if Roman.db.global.debug == true then
     Roman:Print("Comment Length: " .. guildCommentLength)

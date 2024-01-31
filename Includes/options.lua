@@ -88,8 +88,24 @@ Roman.options = {
                 end
               end,
             },
-            showMinimapButton = {
+            useCustomMessage = {
               order = 5,
+              type = "toggle",
+              width = "double",
+              name = L["UseCustomMessage"],
+              desc = L["UseCustomMessageDesc"],
+              get = function()
+                return Roman.db.profile.messages.guildRecruit.useCustomMessage
+              end,
+              set = function(key, value)
+                Roman.db.profile.messages.guildRecruit.useCustomMessage = value
+                if not Roman.db.profile.messages.guildRecruit.useCustomMessage then
+                  Roman.db.profile.messages.guildRecruit.useCustomMessage = value
+                end
+              end,
+            },
+            showMinimapButton = {
+              order = 6,
               type = "toggle",
               width = "normal",
               name = L["ShowMinimapButton"],
@@ -113,13 +129,13 @@ Roman.options = {
               end
             },
             separator2 = {
-              order = 6,
+              order = 7,
               type = "header",
               width = "full",
               name = "",
             },
             lockoutTime = {
-              order = 7,
+              order = 8,
               type = "range",
               width = "full",
               name = L["LockOutTimer"],
@@ -138,19 +154,19 @@ Roman.options = {
               end,
             },
             separator3 = {
-              order = 8,
+              order = 9,
               type = "header",
               width = "full",
               name = L["ResetZoneBarkTimes"],
             },
             resetZoneBarkTimesDescription = {
-              order = 9,
+              order = 10,
               type = "description",
               fontSize = "medium",
               name = L["ResetZoneBarkTimesDesc"],
             },
             resetZoneBarkTimes = {
-              order = 10,
+              order = 11,
               type = "execute",
               name = L["ResetZoneBarkTimes"],
               func = function()
@@ -220,6 +236,13 @@ Roman.options = {
               type = "input",
               width = "full",
               multiline = true,
+              hidden = function()
+                if Roman.db.profile.messages.guildRecruit.useCustomMessage == true then
+                  return false
+                else
+                  return true
+                end
+              end,
               name = L["CustomMessage"],
               get = function()
                 local msg = Roman.db.profile.messages.guildRecruit.customMessage

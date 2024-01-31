@@ -43,7 +43,7 @@ function Roman:ReceiveBarkTimers(prefix, str, distro)
   Roman.db.profile.messages.guildRecruit.zones[timer[1]] = timer[2]
   
   if Roman.db.global.debug == true then
-    Roman:Print("Saved Time: " .. Roman.db.profile.messages.guildRecruit.zones[timer[1]])
+    Roman:Print(timer[1] .. " Saved Time: " .. Roman.db.profile.messages.guildRecruit.zones[timer[1]])
   end
 end
 
@@ -53,7 +53,7 @@ function Roman:SendBarkTimer(str)
     Roman:Print(str)
   end
   
-  Roman:SendCommMessage("RomanBarkTimers", str, "GUILD")
+  Roman:SendCommMessage("Roman-BarkTimers", str, "GUILD")
 end
 --[[
      ########################################################################

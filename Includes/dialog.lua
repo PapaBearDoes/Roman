@@ -40,14 +40,13 @@ function Roman:CreateDialogs()
               if Roman:CheckZoneTime() == true then
                 if genChanName ~= nil then
                   if msgLen > 254 then
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, genChanID) --chanID)
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, genChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[2], "CHANNEL", nil, genChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1], "CHANNEL", nil, genChanID) --chanID)
                   else
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, genChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1] .. " " .. msg[2], "CHANNEL", nil, genChanID) --chanID)
                   end
 
                   Roman:SendBarkTimer(Roman:Serialize(genChanName .. "," .. GetServerTime()))
-
                 end
               end
             end
@@ -58,15 +57,14 @@ function Roman:CreateDialogs()
               if tradeChanName ~= nil then
                 if GetChannelName(GetChannelName(tradeChanName)) > 0 then
                   if msgLen > 254 then
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, tradeChanID) --chanID)
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, tradeChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[2], "CHANNEL", nil, tradeChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1], "CHANNEL", nil, tradeChanID) --chanID)
                   else
-                    RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, tradeChanID) --chanID)
+                    RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1] .. " " .. msg[2], "CHANNEL", nil, tradeChanID) --chanID)
                   end
                 end
 
                 Roman:SendBarkTimer(Roman:Serialize(tradeChanName .. "," .. GetServerTime()))
-
               end
             end
           end
@@ -75,14 +73,13 @@ function Roman:CreateDialogs()
             if Roman:CheckLFGTime() == true then
               if lfgChanName ~= nil then
                 if msgLen > 254 then
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[2], "CHANNEL", nil, lfgChanID) --chanID)
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1], "CHANNEL", nil, lfgChanID) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[2], "CHANNEL", nil, lfgChanID) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1], "CHANNEL", nil, lfgChanID) --chanID)
                 else
-                  RomanCTL:SendChatMessage("BULK", "roman", msg[1] .. " " .. msg[2], "CHANNEL", nil, lfgChanID) --chanID)
+                  RomanCTL:SendChatMessage("BULK", "Roman-GuildBark", msg[1] .. " " .. msg[2], "CHANNEL", nil, lfgChanID) --chanID)
                 end
 
                 Roman:SendBarkTimer(Roman:Serialize(lfgChanName .. "," .. GetServerTime()))
-
               end
             end
           end

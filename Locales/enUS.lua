@@ -56,6 +56,8 @@ L["ShowMinimapButtonDesc"] = "Show Minimap Button Description"
 L["Trade"] = true
 L["TradeChanName"] = "Trade - City"
 L["TradeChanDesc"] = "Shall we bark in the trade channel instead of General when available?"
+L["UseCustomMessage"] = "Use Custom Message"
+L["UseCustomMessageDesc"] = "Shall we use a custom guild recruitment message?"
 L["Version"] = true
 L["WeWillBarkInChannels"] = "We will be barking in the following channels"
 --[[
