@@ -40,8 +40,24 @@ Roman.options = {
               width = "full,",
               name = L["Options"],
             },
-            tradeChan = {
+            generalChan = {
               order = 2,
+              type = "toggle",
+              width = "normal",
+              name = L["General"] .. " " .. L["Channel"],
+              desc = L["GeneralChanDesc"],
+              get = function()
+                return Roman.db.profile.messages.guildRecruit.channels.General
+              end,
+              set = function(key, value)
+                Roman.db.profile.messages.guildRecruit.channels.General = value
+                if not Roman.db.profile.messages.guildRecruit.channels.General then
+                  Roman.db.profile.messages.guildRecruit.channels.General = value
+                end
+              end,
+            },
+            tradeChan = {
+              order = 3,
               type = "toggle",
               width = "normal",
               name = L["Trade"] .. " " .. L["Channel"],
@@ -57,7 +73,7 @@ Roman.options = {
               end,
             },
             LFGChan = {
-              order = 3,
+              order = 4,
               type = "toggle",
               width = "double",
               name = L["LFG"] .. " " .. L["Channel"],
@@ -73,7 +89,7 @@ Roman.options = {
               end,
             },
             showMinimapButton = {
-              order = 4,
+              order = 5,
               type = "toggle",
               width = "normal",
               name = L["ShowMinimapButton"],
@@ -97,13 +113,13 @@ Roman.options = {
               end
             },
             separator2 = {
-              order = 5,
+              order = 6,
               type = "header",
               width = "full",
               name = "",
             },
             lockoutTime = {
-              order = 6,
+              order = 7,
               type = "range",
               width = "full",
               name = L["LockOutTimer"],
@@ -121,6 +137,50 @@ Roman.options = {
                 end
               end,
             },
+            separator3 = {
+              order = 8,
+              type = "header",
+              width = "full",
+              name = L["ResetZoneBarkTimes"],
+            },
+            resetZoneBarkTimesDescription = {
+              order = 9,
+              type = "description",
+              fontSize = "medium",
+              name = L["ResetZoneBarkTimesDesc"],
+            },
+            resetZoneBarkTimes = {
+              order = 10,
+              type = "execute",
+              name = L["ResetZoneBarkTimes"],
+              func = function()
+                if Roman.db.global.debug == true then
+                  Roman:Print("SavedVariables Before Reset:")
+                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
+                    Roman:Print(k .. " => " .. v)
+                  end
+                end
+
+                  Roman.db.profile.messages.guildRecruit.zones = {}
+
+                  local genChanID, genChanName = GetChannelName(L["General"])
+                  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
+                  Roman.db.profile.messages.guildRecruit.zones[genChanName] = GetServerTime()
+                  Roman.db.profile.messages.guildRecruit.zones["Trade - City"] = GetServerTime()
+                  Roman.db.profile.messages.guildRecruit.zones[lfgChanName] = GetServerTime()
+                  
+                  if Roman.db.global.debug == false then
+                    ReloadUI();
+                  end
+
+                if Roman.db.global.debug == true then
+                  Roman:Print("SavedVariables After Reset:")
+                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
+                    Roman:Print(k .. " => " .. v)
+                  end
+                end
+              end,
+            },
           },
         },
         recruitmentMessage = {
@@ -129,7 +189,7 @@ Roman.options = {
           name = L["RecruitmentMessage"],
           cmdInline = true,
           args = {
-            separator3 = {
+            separator10 = {
               order = 1,
               type = "header",
               width = "full",
@@ -149,7 +209,7 @@ Roman.options = {
                 return msg 
               end,
             },
-            separator4 = {
+            separator11 = {
               order = 3,
               type = "header",
               width = "full",

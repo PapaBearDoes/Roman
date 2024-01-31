@@ -62,6 +62,7 @@ end
 
 function Roman:Init()
   Roman:MiniMapIcon()
+  Roman:RegisterComm("RomanBarkTimers", "ReceiveBarkTimers")
   Roman:ScheduleTimer("CreateDialogs", 1)
   Roman:ScheduleTimer("ZONE_CHANGED_NEW_AREA", 5)
 end
