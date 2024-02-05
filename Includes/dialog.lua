@@ -159,15 +159,32 @@ function Roman:CreateDialogs()
         Roman:Print("genChanName: " .. genChanName)
         Roman:Print("tradeChanName: " .. tradeChanName)
         Roman:Print("lfgChanName: " .. lfgChanName)
-
-        local text = L["BarkCanBeSent"] .. ".\n"
-        .. L["WeWillBarkInChannels"] .. ":\n\n"
-        .. genChanName
-        .. tradeChanName
-        .. lfgChanName
-        Roman:Print("PopUp Text: " .. text)
-        self.text:SetFormattedText(text, genChanName, tradeChanName, lfgChanName)
       end
+
+      local text = L["BarkCanBeSent"] .. ".\n"
+      .. L["WeWillBarkInChannels"] .. " " .. L["Using"]
+      
+      if Roman.db.profile.messages.guildRecruit.useCustomMessage == true then
+        text = text .. " " .. Roman:Colorize(L["Custom"], "legendary") .. " " .. L["Message"] .. ":\n\n"
+        if Roman.db.global.debug == true then
+          Roman:Print("Custom or Standard Message:" .. Roman:Colorize(L["Custom"], "legendary"))
+        end
+      else
+        text = text .. " " .. Roman:Colorize(L["Standard"], "legendary") .. " " .. L["Message"] .. ":\n\n"
+        if Roman.db.global.debug == true then
+          Roman:Print("Custom or Standard Message:" .. Roman:Colorize(L["Standard"], "legendary"))
+        end
+      end
+      
+      text = text .. genChanName
+      .. tradeChanName
+      .. lfgChanName
+
+      if Roman.db.global.debug == true then
+        Roman:Print("PopUp Text: " .. text)
+      end
+
+      self.text:SetFormattedText(text, genChanName, tradeChanName, lfgChanName)
     end,
     on_hide = function(self)
       if Roman.db.global.debug == true then

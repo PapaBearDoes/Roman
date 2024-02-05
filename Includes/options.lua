@@ -236,6 +236,13 @@ Roman.options = {
               type = "input",
               width = "full",
               multiline = true,
+              validate = function(i, str)
+                if string.len(str) > 254 then
+                  return L["CharLimit"] .. string.len(str)
+                else
+                  return true
+                end
+              end,
               hidden = function()
                 if Roman.db.profile.messages.guildRecruit.useCustomMessage == true then
                   return false
