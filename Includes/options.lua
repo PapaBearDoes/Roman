@@ -153,50 +153,6 @@ Roman.options = {
                 end
               end,
             },
-            separator3 = {
-              order = 9,
-              type = "header",
-              width = "full",
-              name = L["ResetZoneBarkTimes"],
-            },
-            resetZoneBarkTimesDescription = {
-              order = 10,
-              type = "description",
-              fontSize = "medium",
-              name = L["ResetZoneBarkTimesDesc"],
-            },
-            resetZoneBarkTimes = {
-              order = 11,
-              type = "execute",
-              name = L["ResetZoneBarkTimes"],
-              func = function()
-                if Roman.db.global.debug == true then
-                  Roman:Print("SavedVariables Before Reset:")
-                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
-                    Roman:Print(k .. " => " .. v)
-                  end
-                end
-
-                  Roman.db.profile.messages.guildRecruit.zones = {}
-
-                  local genChanID, genChanName = GetChannelName(L["General"])
-                  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
-                  Roman.db.profile.messages.guildRecruit.zones[genChanName] = GetServerTime()
-                  Roman.db.profile.messages.guildRecruit.zones["Trade - City"] = GetServerTime()
-                  Roman.db.profile.messages.guildRecruit.zones[lfgChanName] = GetServerTime()
-                  
-                  if Roman.db.global.debug == false then
-                    ReloadUI();
-                  end
-
-                if Roman.db.global.debug == true then
-                  Roman:Print("SavedVariables After Reset:")
-                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
-                    Roman:Print(k .. " => " .. v)
-                  end
-                end
-              end,
-            },
           },
         },
         recruitmentMessage = {
@@ -259,6 +215,85 @@ Roman.options = {
                 Roman.db.profile.messages.guildRecruit.customMessage = value
                 if not Roman.db.profile.messages.guildRecruit.customMessage then
                   Roman.db.profile.messages.guildRecruit.customMessage = value
+                end
+              end,
+            },
+          },
+        },
+        barkTimes = {
+          order = 3,
+          type = "group",
+          name = L["BarkTimes"],
+          cmdInline = true,
+          args = {
+            separator12 = {
+              order = 1,
+              type = "header",
+              width = "full",
+              name = L["BarkTimesDesc"],
+            },
+            defaultMessage = {
+              order = 2,
+              type = "description",
+              width = "full",
+              fontSize = "medium",
+              name = function()
+                local barkTimerText = ""
+                for key, value in pairs(Roman.db.profile.messages.guildRecruit.zones) do
+                  value = date("%d %b %Y %H:%M:%S", (value + (Roman.db.profile.messages.guildRecruit.time * 60)))
+                  if key == "Trade - City" then
+                    key = Roman:Colorize(key, "rare")
+                  elseif key == "LookingForGroup" then
+                    key = Roman:Colorize(key, "epic")
+                  else
+                    key = Roman:Colorize(key, "uncommon")
+                  end
+                  barkTimerText = barkTimerText .. "\n" .. key .. " => " .. Roman:Colorize(value, "legendary")
+                end
+                return barkTimerText
+              end,
+            },
+            separator13 = {
+              order = 9,
+              type = "header",
+              width = "full",
+              name = L["ResetZoneBarkTimes"],
+            },
+            resetZoneBarkTimesDescription = {
+              order = 10,
+              type = "description",
+              fontSize = "medium",
+              name = L["ResetZoneBarkTimesDesc"],
+            },
+            resetZoneBarkTimes = {
+              order = 11,
+              type = "execute",
+              name = L["ResetZoneBarkTimes"],
+              func = function()
+                if Roman.db.global.debug == true then
+                  Roman:Print("SavedVariables Before Reset:")
+                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
+                    Roman:Print(k .. " => " .. v)
+                  end
+                end
+
+                  Roman.db.profile.messages.guildRecruit.zones = {}
+
+                  local genChanID, genChanName = GetChannelName(L["General"])
+                  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
+                  Roman.db.profile.messages.guildRecruit.zones[genChanName] = GetServerTime()
+                  Roman.db.profile.messages.guildRecruit.zones["Trade - City"] = GetServerTime()
+                  Roman.db.profile.messages.guildRecruit.zones[lfgChanName] = GetServerTime()
+                  
+                  if Roman.db.global.debug == false then
+                    ReloadUI();
+                  end
+
+                if Roman.db.global.debug == true then
+                  Roman:Print("SavedVariables After Reset:")
+                  for k, v in pairs(Roman.db.profile.messages.guildRecruit.zones) do
+                    Roman:Print(k .. " => " .. v)
+                  end
                 end
               end,
             },

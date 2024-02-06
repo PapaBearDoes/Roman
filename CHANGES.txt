@@ -1,0 +1,33 @@
+                                      \\\\///
+                                     /       \
+                                   (| (.)(.) |)
+     .---------------------------.OOOo--()--oOOO.---------------------------.
+     |                                                                      |
+     |  PapaBearDoes's Roman Addon for World of Warcraft                    |
+     |  @project-version@
+     ########################################################################
+     v1.1.0-Beta
+     -----------
+     Added initial comms for getting timers shared within the guild.
+     Added new options interface.
+     Added ability to utilize custom messages instead of just the guild
+       recruitment message from in-game.
+     Added ability to reset timers and cleanup saved variables.
+     
+     v1.0.1-Release
+     --------------
+     Maintenance Release
+     Forgot to turn of debugging by default.
+     
+     v1.0.0-Release
+     --------------
+     Initial Release
+     ########################################################################
+     |  Last Editted By: @file-author@ - @file-date-iso@
+     |  @file-hash@
+     |                                                                      |
+     '-------------------------.oooO----------------------------------------|
+                              (    )     Oooo.
+                              \  (     (    )
+                               \__)     )  /
+                                       (__/

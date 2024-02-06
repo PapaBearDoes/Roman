@@ -111,7 +111,7 @@ function Roman:Bark()
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next " .. Roman:Colorize(genChanName, "uncommon") .. " Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next " .. Roman:Colorize(genChanName, "uncommon") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
 
@@ -119,7 +119,7 @@ function Roman:Bark()
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next " .. Roman:Colorize(L["TradeChanName"], "rare") .. " Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next " .. Roman:Colorize(L["TradeChanName"], "rare") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
 
@@ -127,13 +127,13 @@ function Roman:Bark()
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next " .. Roman:Colorize(lfgChanName, "epic") .. " Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next " .. Roman:Colorize(lfgChanName, "epic") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
   
   if canBarkGeneral == false and canBarkTrade == false and canBarkLFG == false then
     local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
-    Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+    Roman:Print("NextRun at approximately " .. date("%d %b %Y %H:%M:%S", (nextRun + GetServerTime())))
     local checkTimer = Roman:TimeLeft(Roman.announceTimer)
     if checkTimer ~= nil and checkTimer > 0 then
       if Roman.db.global.debug == true then
@@ -152,9 +152,9 @@ end
 function Roman:CheckTimes()
   local genChanID, genChanName = GetChannelName(L["General"])
   local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
-  Roman:Print(L["Next"] .. " " .. Roman:Colorize(genChanName, "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. Roman:Colorize(L["TradeChanName"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. Roman:Colorize(lfgChanName, "epic") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName]  + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(genChanName, "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(L["TradeChanName"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(lfgChanName, "epic") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName]  + (Roman.db.profile.messages.guildRecruit.time * 60))))
 end
 
 function Roman:CheckZoneTime()

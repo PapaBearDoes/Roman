@@ -37,12 +37,12 @@ RomanLDB = Roman_LDB:NewDataObject("RomanLDB", {
       return
     end
     tooltip:AddLine(myName .. " " .. GetAddOnMetadata(myName, L["Version"]))
-    tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(genChanName, "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(genChanName, "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
-      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(L["TradeChanName"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(L["TradeChanName"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
     if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
-      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(lfgChanName, "epic") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      tooltip:AddLine(L["Next"] .. " " .. Roman:Colorize(lfgChanName, "epic") .. " " .. L["BarkPossibleAtApproximately"] .. ": " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
     tooltip:AddLine(" ")
     tooltip:AddLine(Roman:Colorize(L["RightClick"] .. " ", "eda55f") .. L["RightClickToolTip"])

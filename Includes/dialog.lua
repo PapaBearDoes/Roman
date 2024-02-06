@@ -192,7 +192,7 @@ function Roman:CreateDialogs()
       end
       --Add the new lockout Time
       local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
-      Roman:Print("NextRun at approximately " .. date("%H:%M:%S", (nextRun + GetServerTime())))
+      Roman:Print("NextRun at approximately " .. date("%d %b %Y %H:%M:%S", (nextRun + GetServerTime())))
       local checkTimer = Roman:TimeLeft(Roman.announceTimer)
       if checkTimer ~= nil and checkTimer > 0 then
         if Roman.db.global.debug == true then
