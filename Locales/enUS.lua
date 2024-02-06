@@ -28,6 +28,8 @@ L["SubNameSpace"] = {
 --@localization(locale="enUS", format="lua_additive_table", same-key-is-true=true, handle-subnamespaces="subtable")@
 L["BarkCanBeSent"] = "Guild recruitment bark can now be sent"
 L["BarkPossibleAtApproximately"] = "bark possible at approximately"
+L["BarkTimes"] = "Bark Times"
+L["BarkTimesDesc"] = "We can bark after this time in these zones."
 L["Custom"] = true
 L["CustomMessage"] = "Custom Recruitment Message (limit 254 Chars)"
 L["Channel"] = true
