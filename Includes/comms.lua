@@ -16,61 +16,45 @@ local L = Roman:GetLocale()
 -- End Imports
 --[[ ######################################################################## ]]
 --   ## Do All The Things!!!
--- Create any required hidden frames
-Roman.frame = CreateFrame("GameTooltip")
-Roman.frame:SetOwner(WorldFrame, "ANCHOR_NONE")
+function Roman:ReceiveBarkTimers(prefix, str, distro)
+  local timer, barkTimer
+  if Roman.db.global.debug == true then
+    Roman:Print("Comms Received: ")
+    Roman:Print(str)
+  end
+  
+  _, barkTimer = Roman:Deserialize(str)
+  if Roman.db.global.debug == true then
+    Roman:Print("Deserialized Bark Timer: " .. barkTimer)
+  end
+  
+  timer = Roman:CommaSplitter(barkTimer)
+  if Roman.db.global.debug == true then
+    for k, v in pairs (timer) do
+      Roman:Print(k .. " => " .. v)
+    end
+  end
+  
+  if Roman.db.global.debug == true then
+    Roman:Print("Zone: " .. timer[1])
+    Roman:Print("Time: " .. timer[2])
+  end
 
--- Create DB defaults
-Roman.dbDefaults = {
-  global = {
-    debug = false,
-    message = {
-      type = {
-        [1] = "GuildRecruitment",
-        [2] = "Trade",
-        [3] = "LookingForGroup",
-        [4] = "Dungeons",
-        [5] = "Raid",
-        [6] = "Battleground",
-        [7] = "Guild",
-      },
-      channel = {
-        [1] = "General",
-        [2] = "Trade",
-        [3] = "LocalDefense",
-        [4] = "LookingForGroup",
-        [5] = "Trade(Services)",
-        [6] = "Instance",
-        [7] = "Party",
-        [8] = "Raid",
-        [9] = "RaidWarning",
-        [10] = "Say",
-        [11] = "Yell",
-        [12] = "Guild",
-        [13] = "Officer",
-      },
-    },
-  },
-  profile = {
-    messages = {
-      guildRecruit = {
-        time = 45,
-        channels = {
-          General = true,
-          Trade = true,
-          LookingForGroup = true,
-        },
-        zones = {},
-        useCustomMessage = false,
-        customMessage = "",
-      },
-    },
-    mmIcon = {
-      hide = false,
-      minimapPos = 205,
-    },
-  },
-}
+  Roman.db.profile.messages.guildRecruit.zones[timer[1]] = timer[2]
+  
+  if Roman.db.global.debug == true then
+    Roman:Print(timer[1] .. " Saved Time: " .. Roman.db.profile.messages.guildRecruit.zones[timer[1]])
+  end
+end
+
+function Roman:SendBarkTimer(str)
+  if Roman.db.global.debug == true then
+    Roman:Print("Comms To Send: ")
+    Roman:Print(str)
+  end
+  
+  Roman:SendCommMessage("Roman-BarkTimers", str, "GUILD")
+end
 --[[
      ########################################################################
      |  Last Editted By: @file-author@ - @file-date-iso@

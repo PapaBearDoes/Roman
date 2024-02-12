@@ -26,6 +26,11 @@ end
 
 function Roman:MakeGuildRecruitMessage()
   local guildComment, guildLink = Roman:GetGuildInfo()
+
+  if Roman.db.profile.messages.guildRecruit.useCustomMessage == true and Roman.db.profile.messages.guildRecruit.customMessage ~= nil then
+    guildComment = Roman.db.profile.messages.guildRecruit.customMessage
+  end
+
   guildCommentLength = string.len(guildComment)
   if Roman.db.global.debug == true then
     Roman:Print("Comment Length: " .. guildCommentLength)
@@ -76,7 +81,7 @@ function Roman:ZONE_CHANGED_NEW_AREA()
     if Roman.db.global.debug == true then
       Roman:Print("Continuing ...")
     end
-    Roman.pauseBreathe = Roman:ScheduleTimer("PauseBreathe", 20)
+    Roman.pauseBreathe = Roman:ScheduleTimer("PauseBreathe", 30)
   end
 end
 
@@ -91,57 +96,77 @@ function Roman:Bark()
   local canBarkGeneral = Roman:CheckZoneTime()
   local canBarkTrade = Roman:CheckTradeTime()
   local canBarkLFG = Roman:CheckLFGTime()
+  local genChanID, genChanName = GetChannelName(L["General"])
+  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
+  
   if Roman.db.global.debug == true then
     Roman:Print("Can Bark General: " .. (canBarkGeneral and 'true' or 'false'))
     Roman:Print("Can Bark Trade: " .. (canBarkTrade and 'true' or 'false'))
     Roman:Print("Can Bark LFG: " .. (canBarkLFG and 'true' or 'false'))
   end
   
+  if canBarkGeneral == true and canBarkTrade == false then
+    Roman:PopUp()
+  elseif canBarkGeneral == true and GetChannelName(GetChannelName(L["TradeChanName"])) < 1 then
+    Roman:PopUp()
+  else
+    if Roman.db.global.debug == true then
+      Roman:Print("Next " .. Roman:Colorize(genChanName, "uncommon") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    end
+  end
+
+  if canBarkTrade == true and GetChannelName(GetChannelName(L["TradeChanName"])) > 0 then
+    Roman:PopUp()
+  else
+    if Roman.db.global.debug == true then
+      Roman:Print("Next " .. Roman:Colorize(L["TradeChanName"], "rare") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+    end
+  end
+
   if canBarkLFG == true then
     Roman:PopUp()
   else
     if Roman.db.global.debug == true then
-      Roman:Print("Next LFG Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-    end
-  end
-
-  if canBarkTrade == true and GetChannelName((GetChannelName("Trade - City"))) > 0 then
-    Roman:PopUp()
-  else
-    if Roman.db.global.debug == true then
-      Roman:Print("Next Trade Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+      Roman:Print("Next " .. Roman:Colorize(lfgChanName, "epic") .. " Bark at approximately " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
     end
   end
   
-  if canBarkGeneral == true and canBarkTrade == false then
-    Roman:PopUp()
-  elseif canBarkGeneral == true and GetChannelName((GetChannelName("Trade - City"))) < 1 then
-    Roman:PopUp()
-  else
-    if Roman.db.global.debug == true then
-      local genZone = GetZoneText()
-      Roman:Print("Next General Bark at approximately " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  if canBarkGeneral == false and canBarkTrade == false and canBarkLFG == false then
+    local nextRun = (10 + (60 * Roman.db.profile.messages.guildRecruit.time))
+    Roman:Print("NextRun at approximately " .. date("%d %b %Y %H:%M:%S", (nextRun + GetServerTime())))
+    local checkTimer = Roman:TimeLeft(Roman.announceTimer)
+    if checkTimer ~= nil and checkTimer > 0 then
+      if Roman.db.global.debug == true then
+        Roman:Print("Timer Active, resetting.")
+      end
+      Roman:CancelTimer(Roman.announceTimer)
+    else
+      if Roman.db.global.debug == true then
+        Roman:Print("Timer Not Active, moving on ...")
+      end
     end
+    Roman.announceTimer = Roman:ScheduleTimer("Bark", nextRun)
   end
 end
 
 function Roman:CheckTimes()
-  local genZone = GetZoneText()
-  Roman:Print(L["Next"] .. " " .. L["General"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genZone] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. L["Trade"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["Trade"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
-  Roman:Print(L["Next"] .. " " .. L["LFG"] .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones["LFG"] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  local genChanID, genChanName = GetChannelName(L["General"])
+  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(genChanName, "uncommon") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[genChanName] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(L["TradeChanName"], "rare") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] + (Roman.db.profile.messages.guildRecruit.time * 60))))
+  Roman:Print(L["Next"] .. " " .. Roman:Colorize(lfgChanName, "epic") .. " " .. L["BarkPossibleAtApproximately"] .. " " .. date("%d %b %Y %H:%M:%S", (Roman.db.profile.messages.guildRecruit.zones[lfgChanName]  + (Roman.db.profile.messages.guildRecruit.time * 60))))
 end
 
 function Roman:CheckZoneTime()
-  local zone = GetZoneText()
+  local genChanID, genChanName = GetChannelName(L["General"])
   local time = GetServerTime()
   local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
-  if Roman.db.profile.messages.guildRecruit.zones[zone] == nil then
-    Roman.db.profile.messages.guildRecruit.zones[zone] = time
+  if Roman.db.profile.messages.guildRecruit.zones[genChanName] == nil then
+    Roman.db.profile.messages.guildRecruit.zones[genChanName] = time
   end
-  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones[zone]
+  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones[genChanName]
   if time > testTime then
-    if Roman.db.profile.messages.guildRecruit.channels.General == true then
+    if Roman.db.profile.messages.guildRecruit.channels.General == true and GetChannelName(GetChannelName(L["TradeChanName"])) < 1 then
       return true
     else
       return false
@@ -154,10 +179,10 @@ end
 function Roman:CheckTradeTime()
   local time = GetServerTime()
   local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
-  if Roman.db.profile.messages.guildRecruit.zones["Trade"] == nil then
-    Roman.db.profile.messages.guildRecruit.zones["Trade"] = time
+  if Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] == nil then
+    Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]] = time
   end
-  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones["Trade"]
+  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones[L["TradeChanName"]]
   if time > testTime then
     if Roman.db.profile.messages.guildRecruit.channels.Trade == true then
       return true
@@ -170,12 +195,13 @@ function Roman:CheckTradeTime()
 end
 
 function Roman:CheckLFGTime()
+  local lfgChanID, lfgChanName = GetChannelName(L["LookingForGroup"])
   local time = GetServerTime()
   local lockTime = (60 * Roman.db.profile.messages.guildRecruit.time)
-  if Roman.db.profile.messages.guildRecruit.zones["LFG"] == nil then
-    Roman.db.profile.messages.guildRecruit.zones["LFG"] = time
+  if Roman.db.profile.messages.guildRecruit.zones[lfgChanName] == nil then
+    Roman.db.profile.messages.guildRecruit.zones[lfgChanName] = time
   end
-  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones["LFG"]
+  local testTime = lockTime + Roman.db.profile.messages.guildRecruit.zones[lfgChanName]
   if time > testTime then
     if Roman.db.profile.messages.guildRecruit.channels.LookingForGroup == true then
       return true
@@ -185,6 +211,14 @@ function Roman:CheckLFGTime()
   else
     return false
   end
+end
+
+function Roman:CommaSplitter(str)
+  local fields = {}
+  for field in str:gmatch('([^,]+)') do
+    fields[#fields+1] = field
+  end
+  return fields
 end
 --[[
      ########################################################################
