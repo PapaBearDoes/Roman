@@ -6,6 +6,10 @@
      |  PapaBearDoes's Roman Addon for World of Warcraft                    |
      |  @project-version@
      ########################################################################
+     v1.1.1
+     -----------
+     Added Bark Times list to options display.
+     
      v1.1.0-Beta
      -----------
      Added initial comms for getting timers shared within the guild.
